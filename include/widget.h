@@ -55,7 +55,7 @@ public:
     inline EventResult handle(const genv::event &evt, const Vector2 &cursor)
     {
         bool cant = false;
-        handle(evt, cursor, cant);
+        return handle(evt, cursor, cant);
     }
 
     /**
