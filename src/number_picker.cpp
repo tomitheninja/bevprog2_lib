@@ -22,6 +22,23 @@ NumberPicker::NumberPicker(const Vector2 &position) : Widget(position)
         return EventResult::Unhandled;
     });
 
+    addEvent([&](const genv::event &ev, const Vector2 &cursor) {
+        if (containsPoint(cursor))
+        {
+            if (ev.keycode == genv::key_pgup)
+            {
+                setValue(getValue() + 10);
+                return EventResult::Handled;
+            }
+            if (ev.keycode == genv::key_pgdn)
+            {
+                setValue(getValue() - 10);
+                return EventResult::Handled;
+            }
+        }
+        return EventResult::Unhandled;
+    });
+
     update();
 }
 
@@ -54,18 +71,24 @@ void NumberPicker::setSize(const Vector2 &size)
 {
     Widget::setSize(size);
 
-    Vector2 lbSize = {size.x(), size.y() / 2};
-    Vector2 btnSize = {size.x() / 2, size.y() / 2};
+    Vector2 position = getPosition();
+    auto halfHeight = size.y() / 2;
+    auto fourthWidth = size.x() / 3;
 
-    _lbValue.setSize(lbSize);
+    Vector2 btnSize = {fourthWidth, halfHeight};
+
+    Vector2 pos = getPosition() + Vector2{10, 0};
+
+    _btnIncr.moveTo(pos);
     _btnIncr.setSize(btnSize);
+    _btnIncr.update();
+
+    _btnDecr.moveTo(pos + Vector2{0, halfHeight});
     _btnDecr.setSize(btnSize);
+    _btnDecr.update();
 
-    Vector2 pos = getPosition();
-
-    _lbValue.moveTo(pos);
-    _btnIncr.moveTo(pos + Vector2{0, btnSize.y()});
-    _btnDecr.moveTo(_btnIncr.getPosition() + Vector2{btnSize.x(), 0});
+    _lbValue.moveTo(pos + Vector2{fourthWidth, size.y() / 4});
+    _lbValue.update();
 }
 
 EventResult NumberPicker::handle(const genv::event &ev, const Vector2 &cursor)
