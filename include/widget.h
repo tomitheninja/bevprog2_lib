@@ -51,7 +51,12 @@ public:
      * Send an event to the widget to handle.
      *
      */
-    virtual EventResult handle(const genv::event &evt, const Vector2 &cursor);
+    virtual EventResult handle(const genv::event &evt, const Vector2 &cursor, bool &canCaptureFocus);
+    inline EventResult handle(const genv::event &evt, const Vector2 &cursor)
+    {
+        bool cant = false;
+        handle(evt, cursor, cant);
+    }
 
     /**
      * Can be used to update the hidden properties of the widget
@@ -73,7 +78,18 @@ public:
         flags = flags & ~f;
     }
 
+    bool isFocused() const
+    {
+        return this == Widget::focused;
+    }
+
+    static void clearFocus() {
+        Widget::focused = nullptr;
+    }
+
 protected:
+    static Widget *focused;
+
 private:
     Vector2 _position;
     Vector2 _size = {0, 0};

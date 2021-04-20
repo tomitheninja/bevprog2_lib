@@ -15,7 +15,7 @@ public:
     void draw() const override;
     void update() override;
     void setSize(const Vector2 &size) override;
-    EventResult handle(const genv::event &ev, const Vector2 &cursor) override;
+    EventResult handle(const genv::event &ev, const Vector2 &cursor, bool &canCaptureFocus) override;
 
 protected:
 private:

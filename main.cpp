@@ -25,9 +25,12 @@ int main()
         if (ev.type == genv::ev_mouse && ev.button != genv::btn_wheelup && ev.button != btn_wheelup)
         {
             cursor = {ev.pos_x, ev.pos_y};
+            if (ev.button == genv::btn_left)
+                Widget::clearFocus();
         }
 
-        n.handle(ev, cursor);
+        bool didntCaptureFocus = true;
+        n.handle(ev, cursor, didntCaptureFocus);
 
         n.draw();
 

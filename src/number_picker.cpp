@@ -23,7 +23,7 @@ NumberPicker::NumberPicker(const Vector2 &position) : Widget(position)
     });
 
     addEvent([&](const genv::event &ev, const Vector2 &cursor) {
-        if (containsPoint(cursor))
+        if (isFocused())
         {
             if (ev.keycode == genv::key_pgup)
             {
@@ -91,10 +91,20 @@ void NumberPicker::setSize(const Vector2 &size)
     _lbValue.update();
 }
 
-EventResult NumberPicker::handle(const genv::event &ev, const Vector2 &cursor)
+EventResult NumberPicker::handle(const genv::event &ev, const Vector2 &cursor, bool &canCaptureFocus)
 {
-    Widget::handle(ev, cursor);
-    _lbValue.handle(ev, cursor);
-    _btnIncr.handle(ev, cursor);
-    _btnDecr.handle(ev, cursor);
+    auto r0 = Widget::handle(ev, cursor, canCaptureFocus);
+    if (r0 == EventResult::Handled)
+        return EventResult::Handled;
+    auto r1 = _lbValue.handle(ev, cursor);
+    if (r1 == EventResult::Handled)
+        return EventResult::Handled;
+    auto r2 = _btnIncr.handle(ev, cursor);
+    if (r2 == EventResult::Handled)
+        return EventResult::Handled;
+    auto r3 = _btnDecr.handle(ev, cursor);
+    if (r3 == EventResult::Handled)
+        return EventResult::Handled;
+
+    return EventResult::Continue;
 }

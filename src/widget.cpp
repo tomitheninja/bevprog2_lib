@@ -1,6 +1,8 @@
 #include "widget.h"
 #include <iostream>
 
+Widget *Widget::focused = nullptr;
+
 void Widget::moveTo(const Vector2 &topLeft)
 {
     if (_position != topLeft)
@@ -44,8 +46,13 @@ int Widget::addEvent(EventHandler event)
     return listeners.size();
 }
 
-EventResult Widget::handle(const genv::event &evt, const Vector2 &cursor)
+EventResult Widget::handle(const genv::event &evt, const Vector2 &cursor, bool &canCaptureFocus)
 {
+    if (canCaptureFocus && evt.button == genv::btn_left && containsPoint(cursor))
+    {
+        focused = this;
+        canCaptureFocus = false;
+    }
     for (auto p_listener : listeners)
     {
         p_listener(evt, cursor);
@@ -61,7 +68,8 @@ void Widget::draw() const
     Vector2 btmRight = topLeft + Vector2{size.x(), size.y()};
     Vector2 btmLeft = topLeft + Vector2{0, size.y()};
 
-    Color(255, 255, 255).apply();
+    Color(255, 255, isFocused() ? 0 : 255).apply();
+
     if (flags & 1)
         topLeft.line_to_abs(topRight);
     if (flags & 2)
