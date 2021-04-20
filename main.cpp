@@ -9,14 +9,17 @@ int main()
     genv::gout.open(screen.x(), screen.y());
     genv::gout << genv::font("LiberationSans-Regular.ttf", 20);
 
-    std::vector<Widget*> ws;
+    std::vector<Widget *> ws;
 
     ListBox w1({150, 100}, {"alma", "korte", "barack", "cseresznye", "meggy"});
     w1.setOpenLength(3);
 
     NumberPicker w2({150, 200});
+    // TODO:
+    // Yes, there should be a better border API
+    // But unfortunately I have more homeworks to do
     w2.enableFlags(0b1111);
-    NumberPicker w3({150, 300});
+    NumberPicker w3({150, 300}, -25, 25);
     w3.enableFlags(0b1111);
 
     ws.push_back(&w1);
@@ -37,8 +40,8 @@ int main()
         }
 
         bool didntCaptureFocus = true;
-        for(auto& pw: ws) {
-
+        for (auto &pw : ws)
+        {
             pw->handle(ev, cursor, didntCaptureFocus);
             pw->draw();
         }

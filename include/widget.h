@@ -83,7 +83,8 @@ public:
         return this == Widget::focused;
     }
 
-    static void clearFocus() {
+    static void clearFocus()
+    {
         Widget::focused = nullptr;
     }
 

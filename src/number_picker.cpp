@@ -1,6 +1,6 @@
 #include "number_picker.h"
 
-NumberPicker::NumberPicker(const Vector2 &position) : Widget(position)
+NumberPicker::NumberPicker(const Vector2 &position, int min, int max) : Widget(position)
 {
     _btnIncr.setText("+");
     _btnIncr.addEvent([&](const genv::event &ev, const Vector2 &cursor) {
@@ -39,12 +39,20 @@ NumberPicker::NumberPicker(const Vector2 &position) : Widget(position)
         return EventResult::Unhandled;
     });
 
+    _min = min;
+    _max = max;
+
     update();
 }
 
 void NumberPicker::setValue(int value)
 {
-    _value = value;
+    if (value < _min)
+        _value = _min;
+    else if (value > _max)
+        _value = _max;
+    else
+        _value = value;
     update();
 }
 

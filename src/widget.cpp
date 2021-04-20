@@ -56,11 +56,12 @@ EventResult Widget::handle(const genv::event &evt, const Vector2 &cursor, bool &
     EventResult outerResult = EventResult::Continue;
     for (auto p_listener : listeners)
     {
-        switch(p_listener(evt, cursor)) {
-            case EventResult::Handled:
-                return EventResult::Handled;
-            case EventResult::Continue:
-                outerResult = EventResult::Continue;
+        switch (p_listener(evt, cursor))
+        {
+        case EventResult::Handled:
+            return EventResult::Handled;
+        case EventResult::Continue:
+            outerResult = EventResult::Continue;
         }
     }
     return outerResult;
@@ -75,7 +76,7 @@ void Widget::draw() const
     Vector2 btmLeft = topLeft + Vector2{0, size.y()};
 
     bgColor.apply();
-    (topLeft+Vector2{1,1}).draw_rect(size - Vector2{2,2});
+    (topLeft + Vector2{1, 1}).draw_rect(size - Vector2{2, 2});
 
     Color(255, 255, isFocused() ? 0 : 255).apply();
 

@@ -21,7 +21,6 @@ public:
     void update() override;
 
 protected:
-
 private:
     std::string _text = "";
     Color _color = {255, 255, 255};

@@ -32,14 +32,14 @@ ListBox::ListBox(const Vector2 &position, const std::vector<std::string> &option
                     _firstIndex--;
                     updateLabels();
                 }
-                return EventResult::Continue;;
+                return EventResult::Continue;
             case genv::btn_wheeldown:
                 if (_firstIndex + _displayMany < _options.size())
                 {
                     _firstIndex++;
                     updateLabels();
                 }
-                return EventResult::Continue;;
+                return EventResult::Continue;
             }
         }
         return EventResult::Unhandled;
