@@ -6,8 +6,9 @@
 	<string>
 	<vector>
 
-1618934451 source:c:\users\tomi\desktop\bead2\main.cpp
+1618940299 source:c:\users\tomi\desktop\bead2\main.cpp
 	"graphics.hpp"
+	"label.h"
 
 1618934451 c:\users\tomi\desktop\bead2\include\graphics.hpp
 	<string>
@@ -29,4 +30,19 @@
 	<iostream>
 	<cmath>
 	"color.h"
+
+1618940160 c:\users\tomi\desktop\bead2\include\label.h
+	"widget.h"
+
+1618941738 c:\users\tomi\desktop\bead2\include\widget.h
+	"vector2.h"
+	<vector>
+	<functional>
+
+1618940118 source:c:\users\tomi\desktop\bead2\src\label.cpp
+	"label.h"
+
+1618941921 source:c:\users\tomi\desktop\bead2\src\widget.cpp
+	"widget.h"
+	<iostream>
 

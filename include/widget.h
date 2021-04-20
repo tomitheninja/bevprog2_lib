@@ -10,16 +10,19 @@ enum EventResult
     Handled,       // Did change the widget's state and the event should not be processed anymore.
     Continue,      // Chaged the widget's state, but should continue processing the event.
 };
+
+typedef std::function<void(const genv::event &evt, const Vector2 &cursor)> EventHandler;
+
 struct Event
 {
     int id;
-    std::function<EventResult(genv::event, Vector2)> listener;
+    EventHandler handle;
 };
 
 class Widget
 {
 public:
-    Widget(Vector2 position) : _position(position){};
+    Widget(const Vector2 &position) : _position(position){};
     virtual ~Widget();
     /**
      * A Vector2 pointing to the top left of the widget
@@ -36,13 +39,13 @@ public:
      */
     virtual bool containsPoint(const Vector2 &cursor) const;
 
-    virtual void draw() = 0;
+    virtual void draw() const = 0;
 
     /**
      * Registers a new event the widget can handle.
      * @returns The ID of the event
      */
-    virtual int addEvent(const Event &event);
+    virtual int addEvent(EventHandler event);
 
     /**
      * Send an event to the widget to handle.
@@ -61,7 +64,7 @@ protected:
 private:
     Vector2 _position;
     Vector2 _size = {0, 0};
-    std::vector<*Event> listeners; // TODO: something more data oriented?
+    std::vector<EventHandler *> listeners; // TODO: something more data oriented?
 };
 
 #endif // WIDGET_H
