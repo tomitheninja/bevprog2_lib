@@ -55,12 +55,14 @@
 		</Linker>
 		<Unit filename="include/color.h" />
 		<Unit filename="include/label.h" />
+		<Unit filename="include/list_box.h" />
 		<Unit filename="include/number_picker.h" />
 		<Unit filename="include/vector2.h" />
 		<Unit filename="include/widget.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/color.cpp" />
 		<Unit filename="src/label.cpp" />
+		<Unit filename="src/list_box.cpp" />
 		<Unit filename="src/number_picker.cpp" />
 		<Unit filename="src/vector2.cpp" />
 		<Unit filename="src/widget.cpp" />

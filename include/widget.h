@@ -11,7 +11,7 @@ enum EventResult
     Continue,      // Chaged the widget's state, but should continue processing the event.
 };
 
-typedef std::function<void(const genv::event &evt, const Vector2 &cursor)> EventHandler;
+typedef std::function<EventResult(const genv::event &evt, const Vector2 &cursor)> EventHandler;
 
 struct Event
 {
@@ -91,6 +91,7 @@ protected:
     static Widget *focused;
 
 private:
+    Color bgColor{32, 32, 32};
     Vector2 _position;
     Vector2 _size = {0, 0};
     std::vector<EventHandler> listeners; // TODO: something more data oriented?
