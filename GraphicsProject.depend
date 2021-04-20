@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1618934451 source:c:\users\tomi\desktop\graphicslib64_0412\main.cpp
+	"graphics.hpp"
+
+1618934451 c:\users\tomi\desktop\graphicslib64_0412\include\graphics.hpp
+	<string>
+	<vector>
+
+1618934451 source:c:\users\tomi\desktop\bead2\main.cpp
+	"graphics.hpp"
+
+1618934451 c:\users\tomi\desktop\bead2\include\graphics.hpp
+	<string>
+	<vector>
+
