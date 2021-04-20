@@ -13,3 +13,20 @@
 	<string>
 	<vector>
 
+1618935083 source:c:\users\tomi\desktop\bead2\src\color.cpp
+	"color.h"
+
+1618935079 c:\users\tomi\desktop\bead2\include\color.h
+	<cmath>
+	<iostream>
+	"graphics.hpp"
+
+1618935092 source:c:\users\tomi\desktop\bead2\src\vector2.cpp
+	"vector2.h"
+
+1618935088 c:\users\tomi\desktop\bead2\include\vector2.h
+	"graphics.hpp"
+	<iostream>
+	<cmath>
+	"color.h"
+
