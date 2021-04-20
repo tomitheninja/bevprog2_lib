@@ -23,7 +23,7 @@ class Widget
 {
 public:
     Widget(const Vector2 &position) : _position(position){};
-    virtual ~Widget();
+    virtual ~Widget() = default;
     /**
      * A Vector2 pointing to the top left of the widget
      */
@@ -39,7 +39,7 @@ public:
      */
     virtual bool containsPoint(const Vector2 &cursor) const;
 
-    virtual void draw() const = 0;
+    virtual void draw() const;
 
     /**
      * Registers a new event the widget can handle.
@@ -53,18 +53,33 @@ public:
      */
     virtual EventResult handle(const genv::event &evt, const Vector2 &cursor);
 
-protected:
-    void setSize(const Vector2 &size);
     /**
      * Can be used to update the hidden properties of the widget
      * For example when a label might need to be updated, when changing it's text
+     * Usually called by an other widget
      */
     virtual void update();
 
+    /** Used only by other widgets */
+    virtual void setSize(const Vector2 &size);
+
+    void enableFlags(unsigned int f)
+    {
+        flags = flags | f;
+    }
+
+    void disableFlags(unsigned int f)
+    {
+        flags = flags & ~f;
+    }
+
+protected:
 private:
     Vector2 _position;
     Vector2 _size = {0, 0};
-    std::vector<EventHandler *> listeners; // TODO: something more data oriented?
+    std::vector<EventHandler> listeners; // TODO: something more data oriented?
+    // 0b[border top][border right][border bottom][border left]
+    unsigned int flags = 0;
 };
 
 #endif // WIDGET_H

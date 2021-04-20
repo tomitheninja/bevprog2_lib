@@ -18,9 +18,9 @@ public:
     void setColor(Color color) { _color = color; }
 
     void draw() const override;
+    void update() override;
 
 protected:
-    void update() override;
 
 private:
     std::string _text = "";

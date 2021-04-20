@@ -1,5 +1,6 @@
 #include "graphics.hpp"
 #include "label.h"
+#include "number_picker.h"
 
 using namespace genv;
 
@@ -10,28 +11,24 @@ int main()
     gout << font("LiberationSans-Regular.ttf", 20);
 
 
-    Label l({100, 100});
-    l.addEvent([&](const genv::event& ev, const Vector2& cursor){
-        if (l.containsPoint(cursor)) {
-            genv::gout
-                << genv::move_to(0, 0)
-                << genv::color(255, 255, 0)
-                << genv::box(50, 50);
-        }
-        return EventResult::Continue;
-    });
+    NumberPicker n({100, 100});
+    n.enableFlags(0b1111);
 
+    n.moveTo({200, 200});
 
-
-    l.setText("lorem ipsum");
     event ev;
     while (gin >> ev && ev.keycode != genv::key_escape)
     {
         screen.clear();
 
-        l.handle(ev, {ev.pos_x, ev.pos_y});
+        Vector2 cursor = {ev.pos_x, ev.pos_y};
 
-        l.draw();
+        if (ev.button == genv::btn_left) {
+            std::cout << "clicked\n";
+            n.handle(ev, cursor);
+        }
+
+        n.draw();
 
         genv::gout << genv::refresh;
     }

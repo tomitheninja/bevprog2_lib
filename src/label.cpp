@@ -9,6 +9,7 @@ void Label::update()
 
 void Label::draw() const
 {
+    Widget::draw();
     getPosition().move_to();
     getColor().apply();
     genv::gout << genv::text(getText());

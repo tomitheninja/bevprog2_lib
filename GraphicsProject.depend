@@ -6,43 +6,51 @@
 	<string>
 	<vector>
 
-1618940299 source:c:\users\tomi\desktop\bead2\main.cpp
+1618946199 source:c:\users\tomi\desktop\bead2\main.cpp
 	"graphics.hpp"
 	"label.h"
+	"number_picker.h"
 
-1618934451 c:\users\tomi\desktop\bead2\include\graphics.hpp
+1618946803 c:\users\tomi\desktop\bead2\include\graphics.hpp
 	<string>
 	<vector>
 
-1618935083 source:c:\users\tomi\desktop\bead2\src\color.cpp
+1618946810 source:c:\users\tomi\desktop\bead2\src\color.cpp
 	"color.h"
 
-1618935079 c:\users\tomi\desktop\bead2\include\color.h
+1618946800 c:\users\tomi\desktop\bead2\include\color.h
 	<cmath>
 	<iostream>
 	"graphics.hpp"
 
-1618935092 source:c:\users\tomi\desktop\bead2\src\vector2.cpp
+1618946815 source:c:\users\tomi\desktop\bead2\src\vector2.cpp
 	"vector2.h"
 
-1618935088 c:\users\tomi\desktop\bead2\include\vector2.h
+1618946806 c:\users\tomi\desktop\bead2\include\vector2.h
 	"graphics.hpp"
 	<iostream>
 	<cmath>
 	"color.h"
 
-1618940160 c:\users\tomi\desktop\bead2\include\label.h
+1618946804 c:\users\tomi\desktop\bead2\include\label.h
 	"widget.h"
 
-1618941738 c:\users\tomi\desktop\bead2\include\widget.h
+1618946876 c:\users\tomi\desktop\bead2\include\widget.h
 	"vector2.h"
 	<vector>
 	<functional>
 
-1618940118 source:c:\users\tomi\desktop\bead2\src\label.cpp
+1618946812 source:c:\users\tomi\desktop\bead2\src\label.cpp
 	"label.h"
 
-1618941921 source:c:\users\tomi\desktop\bead2\src\widget.cpp
+1618946925 source:c:\users\tomi\desktop\bead2\src\widget.cpp
 	"widget.h"
 	<iostream>
+
+1618947312 source:c:\users\tomi\desktop\bead2\src\number_picker.cpp
+	"number_picker.h"
+
+1618946805 c:\users\tomi\desktop\bead2\include\number_picker.h
+	"widget.h"
+	"label.h"
 

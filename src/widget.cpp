@@ -1,14 +1,6 @@
 #include "widget.h"
 #include <iostream>
 
-Widget::~Widget()
-{
-    for (auto p_listener : listeners)
-    {
-        delete p_listener;
-    }
-}
-
 void Widget::moveTo(const Vector2 &topLeft)
 {
     if (_position != topLeft)
@@ -48,7 +40,7 @@ void Widget::update()
 int Widget::addEvent(EventHandler event)
 {
 
-    listeners.push_back(&event);
+    listeners.push_back(event);
     return listeners.size();
 }
 
@@ -56,8 +48,26 @@ EventResult Widget::handle(const genv::event &evt, const Vector2 &cursor)
 {
     for (auto p_listener : listeners)
     {
-        if (p_listener)
-            (*p_listener)(evt, cursor);
+        p_listener(evt, cursor);
     }
     return EventResult::Unhandled;
+}
+
+void Widget::draw() const
+{
+    Vector2 size = getSize();
+    Vector2 topLeft = getPosition();
+    Vector2 topRight = topLeft + Vector2{size.x(), 0};
+    Vector2 btmRight = topLeft + Vector2{size.x(), size.y()};
+    Vector2 btmLeft = topLeft + Vector2{0, size.y()};
+
+    Color(255, 255, 255).apply();
+    if (flags & 1)
+        topLeft.line_to_abs(topRight);
+    if (flags & 2)
+        topRight.line_to_abs(btmRight);
+    if (flags & 4)
+        btmRight.line_to_abs(btmLeft);
+    if (flags & 8)
+        btmLeft.line_to_abs(topLeft);
 }
