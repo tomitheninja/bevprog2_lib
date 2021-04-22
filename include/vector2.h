@@ -74,7 +74,7 @@ public:
 
   inline void setX(int new_x)
   {
-    if (new_x & ~1023)
+    if (new_x & ~4095)
     {
       throw std::invalid_argument("x should not be negative or too large!");
     }
@@ -83,7 +83,7 @@ public:
 
   inline void setY(int new_y)
   {
-    if (new_y & ~1023)
+    if (new_y & ~4095)
     {
       throw std::invalid_argument("y should not be negative or too large!");
     }

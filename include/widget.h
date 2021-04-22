@@ -68,16 +68,6 @@ public:
     /** Used only by other widgets */
     virtual void setSize(const Vector2 &size);
 
-    void enableFlags(unsigned int f)
-    {
-        flags = flags | f;
-    }
-
-    void disableFlags(unsigned int f)
-    {
-        flags = flags & ~f;
-    }
-
     bool isFocused() const
     {
         return this == Widget::focused;
@@ -88,16 +78,32 @@ public:
         Widget::focused = nullptr;
     }
 
+    void setBackground(const Color &background);
+    Color getBackground() const;
+
+    void enableFlags(unsigned int f);
+    void disableFlags(unsigned int f);
+
+    void setBorders(bool top, bool right, bool bottom, bool left);
+
+    bool hasBorderTop() const;
+    bool hasBorderRight() const;
+    bool hasBorderBottom() const;
+    bool hasBorderLeft() const;
+
+    bool hasBackground() const;
+    void setBackground(bool enable);
+
 protected:
     static Widget *focused;
 
 private:
-    Color bgColor{32, 32, 32};
+    Color _bgColor{32, 32, 32};
     Vector2 _position;
     Vector2 _size = {0, 0};
-    std::vector<EventHandler> listeners; // TODO: something more data oriented?
-    // 0b[border top][border right][border bottom][border left]
-    unsigned int flags = 0;
+    std::vector<EventHandler> _listeners; // TODO: something more data oriented?
+    // 0b[enable bg][border top][border right][border bottom][border left]
+    unsigned int _flags = 0b00000;
 };
 
 #endif // WIDGET_H

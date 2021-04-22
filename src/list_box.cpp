@@ -19,6 +19,20 @@ ListBox::ListBox(const Vector2 &position, const std::vector<std::string> &option
             setOpen(false);
             return EventResult::Continue;
         }
+
+        // change selected option by arrows
+        if (isFocused() && evt.type == genv::ev_key)
+        {
+            switch (evt.keycode)
+            {
+            case genv::key_up:
+                tryDecr();
+                return EventResult::Handled;
+            case genv::key_down:
+                tryIncr();
+                return EventResult::Handled;
+            }
+        }
     });
 
     addEvent([&](const genv::event &evt, const Vector2 &cursor) {
@@ -27,18 +41,10 @@ ListBox::ListBox(const Vector2 &position, const std::vector<std::string> &option
             switch (evt.button)
             {
             case genv::btn_wheelup:
-                if (_firstIndex > 0)
-                {
-                    _firstIndex--;
-                    updateLabels();
-                }
+                tryDecr();
                 return EventResult::Continue;
             case genv::btn_wheeldown:
-                if (_firstIndex + _displayMany < _options.size())
-                {
-                    _firstIndex++;
-                    updateLabels();
-                }
+                tryIncr();
                 return EventResult::Continue;
             }
         }
@@ -46,6 +52,8 @@ ListBox::ListBox(const Vector2 &position, const std::vector<std::string> &option
     });
 
     setOptions(options);
+    setBorders(true, true, false, true);
+    setBackground(true);
     update();
 };
 
@@ -69,7 +77,7 @@ void ListBox::update()
 {
     if (isOpen())
     {
-        enableFlags(0b1111);
+        setBorders(true, true, true, true);
         int lbHeight = _lbPrimary.getSize().y();
         int cnt = _labels.size();
         setSize(Vector2(getSize().x(), cnt * lbHeight));
@@ -81,8 +89,7 @@ void ListBox::update()
     else
     {
         // border
-        disableFlags(0b1111);
-        enableFlags(0b1011);
+        setBorders(true, true, false, true);
         setSize({110, _lbPrimary.getSize().y()});
         _lbPrimary.moveTo(getPosition() + Vector2{5, 0});
         _lbPrimary.setText(_options[_selectedIndex]);
@@ -132,7 +139,7 @@ void ListBox::updateOptions()
     {
         Label *lb = new Label(getPosition() + Vector2{0, _lbPrimary.getSize().y() * i});
         lb->setText(_options[i]);
-        lb->enableFlags(0b0101);
+        lb->setBorders(true, false, true, false);
         lb->addEvent([&, i, lb](const genv::event &evt, const Vector2 &cursor) {
             if (isOpen() && evt.button == genv::btn_left && lb->containsPoint(cursor))
             {
@@ -165,4 +172,30 @@ void ListBox::updateLabels()
     {
         _labels[i]->setText(_options[i + _firstIndex]);
     }
+    _lbPrimary.setText(_options[_selectedIndex]);
+}
+
+void ListBox::tryIncr()
+{
+    if (isOpen()) {
+        if (_firstIndex + _displayMany < _options.size()) {
+            _firstIndex++;
+        }
+    }
+    else if (_selectedIndex + 1 < _options.size()) {
+        _selectedIndex++;
+    }
+    updateLabels();
+}
+
+void ListBox::tryDecr()
+{
+    if (isOpen()) {
+        if (_firstIndex > 0) {
+            _firstIndex--;
+        }
+    } else if (_selectedIndex > 0) {
+        _selectedIndex--;
+    }
+    updateLabels();
 }

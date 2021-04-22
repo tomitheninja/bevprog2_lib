@@ -42,6 +42,9 @@ NumberPicker::NumberPicker(const Vector2 &position, int min, int max) : Widget(p
     _min = min;
     _max = max;
 
+    setBorders(true, true, true, true);
+    setBackground(true);
+
     update();
 }
 

@@ -6,60 +6,60 @@
 	<string>
 	<vector>
 
-1618961972 source:c:\users\tomi\desktop\bead2\main.cpp
+1619091289 source:c:\users\tomi\desktop\bead2\main.cpp
 	"graphics.hpp"
 	"label.h"
 	"number_picker.h"
 	"list_box.h"
 
-1618946803 c:\users\tomi\desktop\bead2\include\graphics.hpp
+1618962257 c:\users\tomi\desktop\bead2\include\graphics.hpp
 	<string>
 	<vector>
 
-1618946810 source:c:\users\tomi\desktop\bead2\src\color.cpp
+1618962265 source:c:\users\tomi\desktop\bead2\src\color.cpp
 	"color.h"
 
-1618946800 c:\users\tomi\desktop\bead2\include\color.h
+1618962256 c:\users\tomi\desktop\bead2\include\color.h
 	<cmath>
 	<iostream>
 	"graphics.hpp"
 
-1618946815 source:c:\users\tomi\desktop\bead2\src\vector2.cpp
+1618962271 source:c:\users\tomi\desktop\bead2\src\vector2.cpp
 	"vector2.h"
 
-1618946806 c:\users\tomi\desktop\bead2\include\vector2.h
+1619091160 c:\users\tomi\desktop\bead2\include\vector2.h
 	"graphics.hpp"
 	<iostream>
 	<cmath>
 	"color.h"
 
-1618946804 c:\users\tomi\desktop\bead2\include\label.h
+1618962258 c:\users\tomi\desktop\bead2\include\label.h
 	"widget.h"
 
-1618960722 c:\users\tomi\desktop\bead2\include\widget.h
+1619087366 c:\users\tomi\desktop\bead2\include\widget.h
 	"vector2.h"
 	<vector>
 	<functional>
 
-1618946812 source:c:\users\tomi\desktop\bead2\src\label.cpp
+1618962267 source:c:\users\tomi\desktop\bead2\src\label.cpp
 	"label.h"
 
-1618960813 source:c:\users\tomi\desktop\bead2\src\widget.cpp
+1619087523 source:c:\users\tomi\desktop\bead2\src\widget.cpp
 	"widget.h"
 	<iostream>
 
-1618962093 source:c:\users\tomi\desktop\bead2\src\number_picker.cpp
+1619087572 source:c:\users\tomi\desktop\bead2\src\number_picker.cpp
 	"number_picker.h"
 
-1618962010 c:\users\tomi\desktop\bead2\include\number_picker.h
+1618962260 c:\users\tomi\desktop\bead2\include\number_picker.h
 	"widget.h"
 	"label.h"
 
-1618961179 c:\users\tomi\desktop\bead2\include\list_box.h
+1619087845 c:\users\tomi\desktop\bead2\include\list_box.h
 	"Widget.h"
 	"label.h"
 
-1618961477 source:c:\users\tomi\desktop\bead2\src\list_box.cpp
+1619090767 source:c:\users\tomi\desktop\bead2\src\list_box.cpp
 	<memory>
 	"list_box.h"
 

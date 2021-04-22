@@ -20,6 +20,9 @@ public:
 
     void setOpenLength(int length);
 
+    void tryIncr();
+    void tryDecr();
+
 protected:
     void setOpen(bool isOpen);
 
