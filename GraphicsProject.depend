@@ -6,7 +6,7 @@
 	<string>
 	<vector>
 
-1619091289 source:c:\users\tomi\desktop\bead2\main.cpp
+1619092511 source:c:\users\tomi\desktop\bead2\main.cpp
 	"graphics.hpp"
 	"label.h"
 	"number_picker.h"
@@ -36,7 +36,7 @@
 1618962258 c:\users\tomi\desktop\bead2\include\label.h
 	"widget.h"
 
-1619087366 c:\users\tomi\desktop\bead2\include\widget.h
+1619092652 c:\users\tomi\desktop\bead2\include\widget.h
 	"vector2.h"
 	<vector>
 	<functional>

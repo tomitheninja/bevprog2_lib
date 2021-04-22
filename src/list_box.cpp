@@ -10,6 +10,7 @@ ListBox::ListBox(const Vector2 &position, const std::vector<std::string> &option
             setOpen(true);
             return EventResult::Handled;
         }
+        return EventResult::Unhandled;
     });
 
     addEvent([&](const genv::event &evt, const Vector2 &cursor) {
@@ -33,6 +34,7 @@ ListBox::ListBox(const Vector2 &position, const std::vector<std::string> &option
                 return EventResult::Handled;
             }
         }
+        return EventResult::Unhandled;
     });
 
     addEvent([&](const genv::event &evt, const Vector2 &cursor) {
@@ -114,6 +116,7 @@ EventResult ListBox::handle(const genv::event &ev, const Vector2 &cursor, bool &
                 return EventResult::Handled;
             case EventResult::Continue:
                 outerResult = EventResult::Continue;
+            default: (void)0;
             }
         }
         return outerResult;
@@ -147,6 +150,7 @@ void ListBox::updateOptions()
                 setOpen(false);
                 return EventResult::Handled;
             }
+            return EventResult::Unhandled;
         });
         _labels.push_back(lb);
     }

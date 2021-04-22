@@ -94,6 +94,9 @@ public:
     bool hasBackground() const;
     void setBackground(bool enable);
 
+    std::vector<Widget*> getChildren();
+    std::vector<const Widget*> getChildren() const;
+
 protected:
     static Widget *focused;
 
