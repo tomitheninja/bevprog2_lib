@@ -56,29 +56,35 @@ bool Widget::containsPoint(const Vector2 &point) const
 
 void Widget::draw() const
 {
-    // background
+    preDraw();
+    preChildDraw();
+    for (auto p_child : _children)
+    {
+        p_child->draw();
+    }
+    postChildDraw();
+    postDraw();
+}
+
+void Widget::preDraw() const
+{
+    // margin background
     if (_s.bgMColor.first)
     {
         _s.bgMColor.second.apply();
         topLeftM().draw_rect_to(btmRightM());
     }
+    // background
     if (_s.bgColor.first)
     {
         _s.bgColor.second.apply();
         topLeft().draw_rect(_s.size);
     }
-    drawBorders();
-
-    // preChildrenDraw()
-
-    // children
-    for (auto p_child : _children)
-    {
-        p_child->draw();
-    }
-
-    // postChildrenDraw()
 }
+
+void Widget::preChildDraw() const {}
+void Widget::postChildDraw() const {}
+void Widget::postDraw() const { drawBorders(); }
 
 void Widget::drawBorders() const
 {

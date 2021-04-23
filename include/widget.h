@@ -37,6 +37,13 @@ public:
     Vector2 btmRightM() const;
     Vector2 btmLeftM() const;
 
+    virtual void preDraw() const;
+    virtual void preChildDraw() const;
+    virtual void postChildDraw() const;
+    virtual void postDraw() const;
+
+    
+
     void draw() const;
 
     Widget *getParent();
