@@ -25,6 +25,11 @@ int main()
                  s.bgColor = {true, {255, 255, 255}};
              }})});
 
+    w.addEvent([](const genv::event &evt, const Vector2 &cursor, Widget &self) {
+        self.applyStyler([&](Style &s) { s.bgColor.first = self.containsPoint(cursor); });
+        return false;
+    });
+
     Vector2 cursor;
     genv::event ev;
     while (genv::gin >> ev && ev.keycode != genv::key_escape)
@@ -36,6 +41,7 @@ int main()
             cursor = {ev.pos_x, ev.pos_y};
         }
 
+        w.handle(ev, cursor);
         w.draw();
 
         genv::gout << genv::refresh;

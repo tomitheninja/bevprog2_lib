@@ -49,6 +49,13 @@ Vector2 Widget::btmRightM() const { return Vector2{rightM(), bottomM()}; }
 
 bool Widget::containsPoint(const Vector2 &point) const
 {
+    bool y_ok = top() <= point.y() && point.y() <= bottom();
+    bool x_ok = left() <= point.x() && point.x() <= right();
+    return x_ok && y_ok;
+}
+
+bool Widget::containsPointM(const Vector2 &point) const
+{
     bool y_ok = topM() <= point.y() && point.y() <= bottomM();
     bool x_ok = leftM() <= point.x() && point.x() <= rightM();
     return x_ok && y_ok;
@@ -66,7 +73,12 @@ void Widget::draw() const
     postDraw();
 }
 
-void Widget::preDraw() const
+void Widget::preDraw() const { _drawBg(); }
+void Widget::preChildDraw() const {}
+void Widget::postChildDraw() const {}
+void Widget::postDraw() const { _drawBorders(); }
+
+void Widget::_drawBg() const
 {
     // margin background
     if (_s.bgMColor.first)
@@ -82,11 +94,7 @@ void Widget::preDraw() const
     }
 }
 
-void Widget::preChildDraw() const {}
-void Widget::postChildDraw() const {}
-void Widget::postDraw() const { drawBorders(); }
-
-void Widget::drawBorders() const
+void Widget::_drawBorders() const
 {
     // inner border
     if (_s.innerBorderTop.first)
@@ -131,4 +139,19 @@ void Widget::drawBorders() const
         _s.outerBorderRight.second.apply();
         btmRightM().line_to_abs(topRightM());
     }
+}
+
+void Widget::addEvent(Handler handler)
+{
+    _events.push_back(handler);
+}
+
+bool Widget::handle(const genv::event &evt, const Vector2 cursor)
+{
+    for (auto &fn : _events)
+    {
+        if (fn(evt, cursor, *this))
+            return true;
+    }
+    return false;
 }

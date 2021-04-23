@@ -3,15 +3,22 @@
 
 #include "styles.h"
 
+class Widget;
+
+/// A function that takes an event and the cursor location and the widget, which the event is listening on
+/// And returns true if the event is handled and no other widgets should not get this event
+typedef std::function<bool(const genv::event &evt, const Vector2 &cursor, Widget &self)> Handler;
+
 class Widget
 {
 public:
     Widget(const std::vector<Styler> &styles = {}, const std::vector<Widget *> &children = {});
-    ~Widget();
+    virtual ~Widget();
 
     void applyStyler(Styler sr);
 
     bool containsPoint(const Vector2 &point) const;
+    bool containsPointM(const Vector2 &point) const;
 
     // Single position values
     int top() const;
@@ -37,21 +44,26 @@ public:
     Vector2 btmRightM() const;
     Vector2 btmLeftM() const;
 
+    // draw events
+    void draw() const; // calls drawers
+
     virtual void preDraw() const;
     virtual void preChildDraw() const;
     virtual void postChildDraw() const;
     virtual void postDraw() const;
 
-    
-
-    void draw() const;
+    // events
+    void addEvent(Handler handler);
+    bool handle(const genv::event &evt, const Vector2 cursor);
 
     Widget *getParent();
 
 protected:
-    void drawBorders() const; // Call be called any time to fix the borders
+    void _drawBg() const;
+    void _drawBorders() const; // Call be called any time to fix the borders
     Style _s;
     std::vector<Widget *> _children; // not owned!
+    std::vector<Handler> _events;
 
 private:
     Widget *_parent = nullptr;
