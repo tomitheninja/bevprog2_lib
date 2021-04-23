@@ -72,7 +72,7 @@ protected:
     void _drawBg() const;
     void _drawBorders() const; // Call be called any time to fix the borders
 
-    std::vector<Widget *> _children; // not owned!
+    std::vector<Widget *> _children;
     std::vector<Handler> _events;
 
 private:
