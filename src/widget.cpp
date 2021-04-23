@@ -1,24 +1,41 @@
 #include "widget.h"
 #include <iostream>
 
-Widget::Widget(const std::vector<Style*> &styles, const std::vector<Widget*> &children): _children(children) {
-    for (auto p_style: styles) {
-        applyStyle(*p_style);
+Widget::Widget(const std::vector<Styler> &styles, const std::vector<Widget *> &children) : _children(children)
+{
+    for (auto styler : styles)
+    {
+        applyStyler(styler);
     }
-    for (auto p_child: _children) {
+    for (auto p_child : _children)
+    {
         p_child->_parent = this;
     }
 }
 
-int Widget::top() const { return _s.position.y() + (_s.isRelative ? _parent->top() : 0); }
+Widget::~Widget()
+{
+    for (auto p_child : _children)
+        delete p_child;
+}
+
+void Widget::applyStyler(Styler sr)
+{
+    sr(_s);
+}
+
+int Widget::top() const
+{
+    return _s.position.y() + (_s.isRelative ? _parent->top() : 0);
+}
 int Widget::bottom() const { return top() + _s.size.y(); }
 int Widget::left() const { return _s.position.x() + (_s.isRelative ? _parent->left() : 0); }
 int Widget::right() const { return left() + _s.size.x(); }
 
-int Widget::topM() const { return top() - (_s.marginTop.first ? _s.marginTop.second : 0); }
-int Widget::bottomM() const { return bottom() + (_s.marginBottom.first ? _s.marginBottom.second : 0); }
-int Widget::leftM() const { return left() - (_s.marginLeft.first ? _s.marginLeft.second : 0); }
-int Widget::rightM() const { return right() + (_s.marginRight.first ? _s.marginRight.second : 0); }
+int Widget::topM() const { return top() - _s.marginTop; }
+int Widget::bottomM() const { return bottom() + _s.marginBottom; }
+int Widget::leftM() const { return left() - _s.marginLeft; }
+int Widget::rightM() const { return right() + _s.marginRight; }
 
 Vector2 Widget::topLeft() const { return Vector2{left(), top()}; }
 Vector2 Widget::topRight() const { return Vector2{right(), top()}; }
@@ -30,45 +47,82 @@ Vector2 Widget::topRightM() const { return Vector2{rightM(), topM()}; }
 Vector2 Widget::btmLeftM() const { return Vector2{leftM(), bottomM()}; }
 Vector2 Widget::btmRightM() const { return Vector2{rightM(), bottomM()}; }
 
-void Widget::applyStyle(Style &style)
-{
-    style.applyOn(_s);
-}
-
 bool Widget::containsPoint(const Vector2 &point) const
 {
-    bool y_ok = top() <= point.y() && point.y() <= bottom();
-    bool x_ok = left() <= point.x() && point.x() <= right();
-    return y_ok && x_ok;
+    bool y_ok = topM() <= point.y() && point.y() <= bottomM();
+    bool x_ok = leftM() <= point.x() && point.x() <= rightM();
+    return x_ok && y_ok;
 }
 
 void Widget::draw() const
 {
     // background
+    if (_s.bgMColor.first)
+    {
+        _s.bgMColor.second.apply();
+        topLeftM().draw_rect_to(btmRightM());
+    }
     if (_s.bgColor.first)
     {
         _s.bgColor.second.apply();
         topLeft().draw_rect(_s.size);
     }
+    drawBorders();
+
+    // preChildrenDraw()
+
     // children
-    for (auto p_child: _children) {
+    for (auto p_child : _children)
+    {
         p_child->draw();
     }
-    drawBorders();
+
+    // postChildrenDraw()
 }
 
 void Widget::drawBorders() const
 {
-    if (_s.outerBorder.first)
+    // inner border
+    if (_s.innerBorderTop.first)
     {
-        _s.outerBorder.second.apply();
-        if (_s.marginTop.first)
-            topLeftM().line_to_abs(topRightM());
-        if (_s.marginBottom.first)
-            btmLeftM().line_to_abs(btmRightM());
-        if (_s.marginLeft.first)
-            btmLeftM().line_to_abs(topLeftM());
-        if (_s.marginRight.first)
-            btmRightM().line_to_abs(topRightM());
+        _s.innerBorderTop.second.apply();
+        topLeftM().line_to_abs(topRightM());
+    }
+    if (_s.innerBorderBottom.first)
+    {
+        _s.innerBorderBottom.second.apply();
+        btmLeftM().line_to_abs(btmRightM());
+    }
+    if (_s.innerBorderLeft.first)
+    {
+        _s.innerBorderLeft.second.apply();
+        btmLeftM().line_to_abs(topLeftM());
+    }
+    if (_s.innerBorderRight.first)
+    {
+        _s.innerBorderRight.second.apply();
+        btmRightM().line_to_abs(topRightM());
+    }
+
+    // outer border
+    if (_s.outerBorderTop.first)
+    {
+        _s.outerBorderTop.second.apply();
+        topLeftM().line_to_abs(topRightM());
+    }
+    if (_s.outerBorderBottom.first)
+    {
+        _s.outerBorderBottom.second.apply();
+        btmLeftM().line_to_abs(btmRightM());
+    }
+    if (_s.outerBorderLeft.first)
+    {
+        _s.outerBorderLeft.second.apply();
+        btmLeftM().line_to_abs(topLeftM());
+    }
+    if (_s.outerBorderRight.first)
+    {
+        _s.outerBorderRight.second.apply();
+        btmRightM().line_to_abs(topRightM());
     }
 }

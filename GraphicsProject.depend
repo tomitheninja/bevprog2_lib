@@ -6,7 +6,7 @@
 	<string>
 	<vector>
 
-1619193701 source:c:\users\tomi\desktop\bead2\main.cpp
+1619198630 source:c:\users\tomi\desktop\bead2\main.cpp
 	"widget.h"
 
 1619187741 c:\users\tomi\desktop\bead2\include\graphics.hpp
@@ -33,13 +33,13 @@
 1618962258 c:\users\tomi\desktop\bead2\include\label.h
 	"widget.h"
 
-1619192136 c:\users\tomi\desktop\bead2\include\widget.h
+1619199701 c:\users\tomi\desktop\bead2\include\widget.h
 	"styles.h"
 
 1618962267 source:c:\users\tomi\desktop\bead2\src\label.cpp
 	"label.h"
 
-1619193734 source:c:\users\tomi\desktop\bead2\src\widget.cpp
+1619199457 source:c:\users\tomi\desktop\bead2\src\widget.cpp
 	"widget.h"
 	<iostream>
 
@@ -66,10 +66,11 @@
 	<tuple>
 	<functional>
 
-1619193684 source:c:\users\tomi\desktop\bead2\src\styles.cpp
+1619197346 source:c:\users\tomi\desktop\bead2\src\styles.cpp
 	"styles.h"
 
-1619193562 c:\users\tomi\desktop\bead2\include\styles.h
+1619199434 c:\users\tomi\desktop\bead2\include\styles.h
 	"color.h"
 	"vector2.h"
+	<functional>
 
