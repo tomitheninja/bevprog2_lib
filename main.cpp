@@ -3,6 +3,7 @@
 #include "label.h"
 #include "container.h"
 #include "button.h"
+#include "pushable_button.h"
 
 int main()
 {
@@ -10,7 +11,7 @@ int main()
     genv::gout.open(screen.x(), screen.y());
     genv::gout << genv::font("LiberationSans-Regular.ttf", 20);
 
-    Button w("lorem ipsum", {[](Style &s) { s.position = {100, 100}; s.outerBorderTop = s.outerBorderBottom = s.outerBorderLeft = s.outerBorderRight = {true, Color{255, 255, 255}}; }});
+    PushableButton w("lorem ipsum", {[](Style &s) { s.position = {100, 100}; }});
 
     Vector2 cursor;
     genv::event ev;

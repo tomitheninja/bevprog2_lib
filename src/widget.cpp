@@ -145,6 +145,15 @@ void Widget::_drawBorders() const
         style.outerBorderRight.second.apply();
         btmRightM().line_to_abs(topRightM());
     }
+    // focus
+    if (isFocused())
+    {
+        Color(255, 255, 32).apply();
+        topLeftM().line_to_abs(topRightM());
+        btmLeftM().line_to_abs(btmRightM());
+        btmLeftM().line_to_abs(topLeftM());
+        btmRightM().line_to_abs(topRightM());
+    }
 }
 
 void Widget::addEvent(Handler handler)
