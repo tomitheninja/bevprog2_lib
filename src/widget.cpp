@@ -1,134 +1,74 @@
 #include "widget.h"
 #include <iostream>
 
-Widget *Widget::focused = nullptr;
-
-void Widget::moveTo(const Vector2 &topLeft)
-{
-    if (_position != topLeft)
-    {
-        _position = topLeft;
-        update();
+Widget::Widget(const std::vector<Style*> &styles, const std::vector<Widget*> &children): _children(children) {
+    for (auto p_style: styles) {
+        applyStyle(*p_style);
+    }
+    for (auto p_child: _children) {
+        p_child->_parent = this;
     }
 }
 
-void Widget::setSize(const Vector2 &size)
+int Widget::top() const { return _s.position.y() + (_s.isRelative ? _parent->top() : 0); }
+int Widget::bottom() const { return top() + _s.size.y(); }
+int Widget::left() const { return _s.position.x() + (_s.isRelative ? _parent->left() : 0); }
+int Widget::right() const { return left() + _s.size.x(); }
+
+int Widget::topM() const { return top() - (_s.marginTop.first ? _s.marginTop.second : 0); }
+int Widget::bottomM() const { return bottom() + (_s.marginBottom.first ? _s.marginBottom.second : 0); }
+int Widget::leftM() const { return left() - (_s.marginLeft.first ? _s.marginLeft.second : 0); }
+int Widget::rightM() const { return right() + (_s.marginRight.first ? _s.marginRight.second : 0); }
+
+Vector2 Widget::topLeft() const { return Vector2{left(), top()}; }
+Vector2 Widget::topRight() const { return Vector2{right(), top()}; }
+Vector2 Widget::btmLeft() const { return Vector2{left(), bottom()}; }
+Vector2 Widget::btmRight() const { return Vector2{right(), bottom()}; }
+
+Vector2 Widget::topLeftM() const { return Vector2{leftM(), topM()}; }
+Vector2 Widget::topRightM() const { return Vector2{rightM(), topM()}; }
+Vector2 Widget::btmLeftM() const { return Vector2{leftM(), bottomM()}; }
+Vector2 Widget::btmRightM() const { return Vector2{rightM(), bottomM()}; }
+
+void Widget::applyStyle(Style &style)
 {
-    if (_size != size)
-    {
-        _size = size;
-        update();
-    }
+    style.applyOn(_s);
 }
 
-bool Widget::containsPoint(const Vector2 &cursor) const
+bool Widget::containsPoint(const Vector2 &point) const
 {
-    const Vector2 &pos = getPosition();
-    const Vector2 &size = getSize();
-    if (!(size.x() | size.y()))
-    {
-        std::cerr << "Widget with zero size detected!" << std::endl;
-        return false;
-    }
-    bool x_ok = pos.x() <= cursor.x() && cursor.x() <= pos.x() + size.x();
-    bool y_ok = pos.y() <= cursor.y() && cursor.y() <= pos.y() + size.y();
-    return x_ok && y_ok;
-}
-
-void Widget::update()
-{
-}
-
-int Widget::addEvent(EventHandler event)
-{
-
-    _listeners.push_back(event);
-    return _listeners.size();
-}
-
-EventResult Widget::handle(const genv::event &evt, const Vector2 &cursor, bool &canCaptureFocus)
-{
-    if (canCaptureFocus && evt.button == genv::btn_left && containsPoint(cursor))
-    {
-        focused = this;
-        canCaptureFocus = false;
-    }
-    EventResult outerResult = EventResult::Continue;
-    for (auto p_listener : _listeners)
-    {
-        switch (p_listener(evt, cursor))
-        {
-        case EventResult::Handled:
-            return EventResult::Handled;
-        case EventResult::Continue:
-            outerResult = EventResult::Continue;
-        }
-    }
-    return outerResult;
+    bool y_ok = top() <= point.y() && point.y() <= bottom();
+    bool x_ok = left() <= point.x() && point.x() <= right();
+    return y_ok && x_ok;
 }
 
 void Widget::draw() const
 {
-    Vector2 size = getSize();
-    Vector2 topLeft = getPosition();
-    Vector2 topRight = topLeft + Vector2{size.x(), 0};
-    Vector2 btmRight = topLeft + Vector2{size.x(), size.y()};
-    Vector2 btmLeft = topLeft + Vector2{0, size.y()};
-
-    if (hasBackground())
+    // background
+    if (_s.bgColor.first)
     {
-        getBackground().apply();
-        (topLeft + Vector2{1, 1}).draw_rect(size + Vector2{0, hasBorderBottom() ? 0 : 1});
+        _s.bgColor.second.apply();
+        topLeft().draw_rect(_s.size);
     }
-
-    Color(255, 255, isFocused() ? 0 : 255).apply();
-
-    if (hasBorderTop())
-        topLeft.line_to_abs(topRight);
-    if (hasBorderRight())
-        topRight.line_to_abs(btmRight);
-    if (hasBorderBottom())
-        btmRight.line_to_abs(btmLeft);
-    if (hasBorderLeft())
-        btmLeft.line_to_abs(topLeft);
+    // children
+    for (auto p_child: _children) {
+        p_child->draw();
+    }
+    drawBorders();
 }
 
-void Widget::setBackground(const Color &color) { _bgColor = color; }
-
-Color Widget::getBackground() const { return _bgColor; }
-
-void Widget::enableFlags(unsigned int f)
+void Widget::drawBorders() const
 {
-    _flags = _flags | f;
+    if (_s.outerBorder.first)
+    {
+        _s.outerBorder.second.apply();
+        if (_s.marginTop.first)
+            topLeftM().line_to_abs(topRightM());
+        if (_s.marginBottom.first)
+            btmLeftM().line_to_abs(btmRightM());
+        if (_s.marginLeft.first)
+            btmLeftM().line_to_abs(topLeftM());
+        if (_s.marginRight.first)
+            btmRightM().line_to_abs(topRightM());
+    }
 }
-
-void Widget::disableFlags(unsigned int f)
-{
-    _flags = _flags & ~f;
-}
-
-void Widget::setBorders(bool top, bool right, bool bottom, bool left)
-{
-    disableFlags(0b1111);
-    enableFlags(top * 0b1000 + right * 0b0100 + bottom * 0b0010 + left * 0b0001);
-}
-
-bool Widget::hasBorderTop() const
-{
-    return _flags & 0b1000;
-}
-bool Widget::hasBorderRight() const
-{
-    return _flags & 0b0100;
-}
-bool Widget::hasBorderBottom() const
-{
-    return _flags & 0b0010;
-}
-bool Widget::hasBorderLeft() const
-{
-    return _flags & 0b0001;
-}
-
-bool Widget::hasBackground() const { return _flags & 0b10000; }
-void Widget::setBackground(bool state) { _flags |= state ? 0b10000 : 0; }

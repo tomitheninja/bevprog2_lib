@@ -56,6 +56,12 @@ public:
     genv::gout << genv::box(size.x(), size.y());
   }
 
+  inline void draw_rect_to(const Vector2 &bt) const
+  {
+    this->move_to();
+    genv::gout << genv::box_to(bt.x(), bt.y());
+  }
+
   inline void clear() const
   {
     Color(0, 0, 0).apply();
@@ -76,7 +82,7 @@ public:
   {
     if (new_x & ~4095)
     {
-      throw std::invalid_argument("x should not be negative or too large!");
+      std::cerr << ("x should not be negative or too large!\n");
     }
     _x = new_x;
   }
@@ -85,7 +91,7 @@ public:
   {
     if (new_y & ~4095)
     {
-      throw std::invalid_argument("y should not be negative or too large!");
+      std::cerr << ("y should not be negative or too large!\n");
     }
     _y = new_y;
   }
