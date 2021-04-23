@@ -12,7 +12,6 @@ Button::Button(const std::string &text, const std::vector<Styler> &styles, const
         s.isRelative = true;
         s.position = {5, 5};
         s.marginRight = s.marginBottom = 5;
-        s.marginLeft = s.marginTop = 10;
         for (auto &style : lbStyles)
         {
             _lb->applyStyler(style);

@@ -10,11 +10,11 @@ int main()
     genv::gout.open(screen.x(), screen.y());
     genv::gout << genv::font("LiberationSans-Regular.ttf", 20);
 
-    Button w("lorem ipsum", {[](Style &s) { s.position = {100, 100}; }});
+    Button w("lorem ipsum", {[](Style &s) { s.position = {100, 100}; s.outerBorderTop = s.outerBorderBottom = s.outerBorderLeft = s.outerBorderRight = {true, Color{255, 255, 255}}; }});
 
     Vector2 cursor;
     genv::event ev;
-    genv::gin.timer(1000 / 64);
+   // genv::gin.timer(1000 / 64);
     while (genv::gin >> ev && ev.keycode != genv::key_escape)
     {
         screen.clear();
