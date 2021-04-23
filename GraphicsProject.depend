@@ -6,13 +6,14 @@
 	<string>
 	<vector>
 
-1619217633 source:c:\users\tomi\desktop\bead2\main.cpp
+1619219272 source:c:\users\tomi\desktop\bead2\main.cpp
 	"widget.h"
 	"label.h"
 	"container.h"
 	"button.h"
 	"pushable_button.h"
 	"number_picker.h"
+	"fixed_size_label.h"
 
 1619187741 c:\users\tomi\desktop\bead2\include\graphics.hpp
 	<string>
@@ -48,8 +49,9 @@
 	"widget.h"
 	<iostream>
 
-1619217232 source:c:\users\tomi\desktop\bead2\src\number_picker.cpp
+1619217856 source:c:\users\tomi\desktop\bead2\src\number_picker.cpp
 	"number_picker.h"
+	<algorithm>
 
 1619217650 c:\users\tomi\desktop\bead2\include\number_picker.h
 	"widget.h"
@@ -99,4 +101,10 @@
 
 1619213902 c:\users\tomi\desktop\bead2\include\pushable_button.h
 	"button.h"
+
+1619219242 source:c:\users\tomi\desktop\bead2\src\fixed_size_label.cpp
+	"fixed_size_label.h"
+
+1619219003 c:\users\tomi\desktop\bead2\include\fixed_size_label.h
+	"widget.h"
 

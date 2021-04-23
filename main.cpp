@@ -5,6 +5,7 @@
 #include "button.h"
 #include "pushable_button.h"
 #include "number_picker.h"
+#include "fixed_size_label.h"
 
 int main()
 {
@@ -14,8 +15,12 @@ int main()
 
     std::vector<Widget *> ws {
         new NumberPicker({[](Style &s) { s.position = {100, 100}; }}, 0, 100),
-        new NumberPicker({[](Style &s) { s.position = {200, 100}; }}, -100, 100)
+        new NumberPicker({[](Style &s) { s.position = {200, 100}; }}, -100, 100),
+        new FixedSizeLabel("foo bar", {[](Style &s) { s.position = {100, 200}; s.size = {250, 30}; }}, true)
     };
+
+    Style& s = ws[2]->style;
+    //s.bgColor = {true, Color{64, 64, 64}};
 
    // PushableButton w("lorem ipsum", {[](Style &s) { s.position = {100, 100}; }});
 
