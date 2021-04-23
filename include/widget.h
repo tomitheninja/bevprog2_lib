@@ -44,13 +44,8 @@ public:
     Vector2 btmRightM() const;
     Vector2 btmLeftM() const;
 
-    // draw events
+    // calls draw events
     void draw() const; // calls drawers
-
-    virtual void preDraw() const;
-    virtual void preChildDraw() const;
-    virtual void postChildDraw() const;
-    virtual void postDraw() const;
 
     // events
     void addEvent(Handler handler);
@@ -61,12 +56,22 @@ public:
 
     bool isFocused() const;
 
+    void update(); // recalculate properties
+
     static void clearFocus();
 
+    Style style;
+
 protected:
+    // draw events
+    virtual void preDraw() const;
+    virtual void preChildDraw() const;
+    virtual void postChildDraw() const;
+    virtual void postDraw() const;
+
     void _drawBg() const;
     void _drawBorders() const; // Call be called any time to fix the borders
-    Style _s;
+
     std::vector<Widget *> _children; // not owned!
     std::vector<Handler> _events;
 

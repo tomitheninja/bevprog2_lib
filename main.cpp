@@ -1,5 +1,7 @@
 
 #include "widget.h"
+#include "label.h"
+#include "container.h"
 
 int main()
 {
@@ -7,34 +9,37 @@ int main()
     genv::gout.open(screen.x(), screen.y());
     genv::gout << genv::font("LiberationSans-Regular.ttf", 20);
 
-    Widget w({
-                 [](Style &s) {
-                     s.position = {100, 100};
-                     s.isRelative = false;
-                     s.bgColor = {true, Color{32, 32, 32}};
-                     s.bgMColor = {true, Color{16, 16, 16}};
-                     s.size = {100, 100};
-                     s.marginLeft = s.marginRight = s.marginTop = s.marginBottom = 10;
-                     s.outerBorderLeft = s.outerBorderRight = {true, Color{255, 255, 255}};
-                 },
-             },
-             {new Widget({[](Style &s) {
-                 s.isRelative = true;
-                 s.position = {25, 25};
-                 s.size = {25, 25};
-                 s.bgColor = {true, {255, 255, 255}};
-             }})});
+    Container w({
+                    [](Style &s) {
+                        s.position = {100, 100};
+                        s.isRelative = false;
+                        //    s.bgColor = {true, Color{32, 32, 32}};
+                        s.bgMColor = {false, Color{32, 32, 32}};
+                        s.innerBorderLeft = s.innerBorderRight = {true, Color{255, 255, 255}};
+                        s.innerBorderTop = s.innerBorderBottom = {true, Color{255, 255, 255}};
+                    },
+                },
+                {new Label("lorem ipsum", {[](Style &s) {
+                               s.isRelative = true;
+                               s.position = {5, 5};
+                               s.marginRight = s.marginBottom = 5;
+                               s.marginLeft = s.marginTop = 10;
+                        }})
+                });
 
-    w.addEvent([](const genv::event &evt, const Vector2 &cursor, Widget &self) {
-        self.applyStyler([&](Style &s) {
-            s.bgColor.first = self.containsPoint(cursor);
-            s.outerBorderTop.second = s.outerBorderRight.second = s.outerBorderBottom.second = s.outerBorderLeft.second = Color{255, 255, self.isFocused() ? 0 : 255};
-        });
+     w.addEvent([](const genv::event &evt, const Vector2 &cursor, Widget &self) {
+        self.style.bgMColor.first = self.containsPointM(cursor);
+      /*  self.style.outerBorderTop.second =
+            self.style.outerBorderRight.second =
+                self.style.outerBorderBottom.second =
+                    self.style.outerBorderLeft.second =
+                        Color{255, 255, self.isFocused() ? 0 : 255};*/
         return false;
     });
 
     Vector2 cursor;
     genv::event ev;
+    genv::gin.timer(1000 / 64);
     while (genv::gin >> ev && ev.keycode != genv::key_escape)
     {
         screen.clear();

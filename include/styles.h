@@ -13,6 +13,8 @@ struct Style
 
     Vector2 size = {0, 0};
 
+    Color fgColor = {255, 255, 255};
+
     std::pair<bool, Color> bgMColor = {false, Color{0, 0, 0}};
     std::pair<bool, Color> bgColor = {false, Color{0, 0, 0}};
 

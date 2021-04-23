@@ -23,7 +23,7 @@ Widget::~Widget()
 
 void Widget::applyStyler(Styler sr)
 {
-    sr(_s);
+    sr(style);
 }
 
 bool Widget::isFocused() const { return Widget::_focused == this; }
@@ -32,16 +32,16 @@ void Widget::clearFocus() { Widget::_focused = nullptr; }
 
 int Widget::top() const
 {
-    return _s.position.y() + (_s.isRelative ? _parent->top() : 0);
+    return style.position.y() + (style.isRelative ? _parent->top() : 0);
 }
-int Widget::bottom() const { return top() + _s.size.y(); }
-int Widget::left() const { return _s.position.x() + (_s.isRelative ? _parent->left() : 0); }
-int Widget::right() const { return left() + _s.size.x(); }
+int Widget::bottom() const { return top() + style.size.y(); }
+int Widget::left() const { return style.position.x() + (style.isRelative ? _parent->left() : 0); }
+int Widget::right() const { return left() + style.size.x(); }
 
-int Widget::topM() const { return top() - _s.marginTop; }
-int Widget::bottomM() const { return bottom() + _s.marginBottom; }
-int Widget::leftM() const { return left() - _s.marginLeft; }
-int Widget::rightM() const { return right() + _s.marginRight; }
+int Widget::topM() const { return top() - style.marginTop; }
+int Widget::bottomM() const { return bottom() + style.marginBottom; }
+int Widget::leftM() const { return left() - style.marginLeft; }
+int Widget::rightM() const { return right() + style.marginRight; }
 
 Vector2 Widget::topLeft() const { return Vector2{left(), top()}; }
 Vector2 Widget::topRight() const { return Vector2{right(), top()}; }
@@ -87,62 +87,62 @@ void Widget::postDraw() const { _drawBorders(); }
 void Widget::_drawBg() const
 {
     // margin background
-    if (_s.bgMColor.first)
+    if (style.bgMColor.first)
     {
-        _s.bgMColor.second.apply();
+        style.bgMColor.second.apply();
         topLeftM().draw_rect_to(btmRightM());
     }
     // background
-    if (_s.bgColor.first)
+    if (style.bgColor.first)
     {
-        _s.bgColor.second.apply();
-        topLeft().draw_rect(_s.size);
+        style.bgColor.second.apply();
+        topLeft().draw_rect(style.size);
     }
 }
 
 void Widget::_drawBorders() const
 {
     // inner border
-    if (_s.innerBorderTop.first)
+    if (style.innerBorderTop.first)
     {
-        _s.innerBorderTop.second.apply();
+        style.innerBorderTop.second.apply();
         topLeftM().line_to_abs(topRightM());
     }
-    if (_s.innerBorderBottom.first)
+    if (style.innerBorderBottom.first)
     {
-        _s.innerBorderBottom.second.apply();
+        style.innerBorderBottom.second.apply();
         btmLeftM().line_to_abs(btmRightM());
     }
-    if (_s.innerBorderLeft.first)
+    if (style.innerBorderLeft.first)
     {
-        _s.innerBorderLeft.second.apply();
+        style.innerBorderLeft.second.apply();
         btmLeftM().line_to_abs(topLeftM());
     }
-    if (_s.innerBorderRight.first)
+    if (style.innerBorderRight.first)
     {
-        _s.innerBorderRight.second.apply();
+        style.innerBorderRight.second.apply();
         btmRightM().line_to_abs(topRightM());
     }
 
     // outer border
-    if (_s.outerBorderTop.first)
+    if (style.outerBorderTop.first)
     {
-        _s.outerBorderTop.second.apply();
+        style.outerBorderTop.second.apply();
         topLeftM().line_to_abs(topRightM());
     }
-    if (_s.outerBorderBottom.first)
+    if (style.outerBorderBottom.first)
     {
-        _s.outerBorderBottom.second.apply();
+        style.outerBorderBottom.second.apply();
         btmLeftM().line_to_abs(btmRightM());
     }
-    if (_s.outerBorderLeft.first)
+    if (style.outerBorderLeft.first)
     {
-        _s.outerBorderLeft.second.apply();
+        style.outerBorderLeft.second.apply();
         btmLeftM().line_to_abs(topLeftM());
     }
-    if (_s.outerBorderRight.first)
+    if (style.outerBorderRight.first)
     {
-        _s.outerBorderRight.second.apply();
+        style.outerBorderRight.second.apply();
         btmRightM().line_to_abs(topRightM());
     }
 }
@@ -154,17 +154,26 @@ void Widget::addEvent(Handler handler)
 
 bool Widget::handle(const genv::event &evt, const Vector2 cursor, bool &canCaptureFocus)
 {
-    if (canCaptureFocus && evt.button == genv::btn_left) {
-        if (containsPointM(cursor)) {
+    if (canCaptureFocus && evt.button == genv::btn_left)
+    {
+        if (containsPointM(cursor))
+        {
             canCaptureFocus = false;
             _focused = this;
-        } else {
+        }
+        else
+        {
             clearFocus();
         }
     }
     for (auto &fn : _events)
     {
         if (fn(evt, cursor, *this))
+            return true;
+    }
+    for (auto &p_child: _children)
+    {
+        if (p_child->handle(evt, cursor, canCaptureFocus))
             return true;
     }
     return false;
