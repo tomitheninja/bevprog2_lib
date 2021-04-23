@@ -26,7 +26,10 @@ int main()
              }})});
 
     w.addEvent([](const genv::event &evt, const Vector2 &cursor, Widget &self) {
-        self.applyStyler([&](Style &s) { s.bgColor.first = self.containsPoint(cursor); });
+        self.applyStyler([&](Style &s) {
+            s.bgColor.first = self.containsPoint(cursor);
+            s.outerBorderTop.second = s.outerBorderRight.second = s.outerBorderBottom.second = s.outerBorderLeft.second = Color{255, 255, self.isFocused() ? 0 : 255};
+        });
         return false;
     });
 
@@ -41,7 +44,8 @@ int main()
             cursor = {ev.pos_x, ev.pos_y};
         }
 
-        w.handle(ev, cursor);
+        bool focus = true;
+        w.handle(ev, cursor, focus);
         w.draw();
 
         genv::gout << genv::refresh;

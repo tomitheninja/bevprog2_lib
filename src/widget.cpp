@@ -1,6 +1,8 @@
 #include "widget.h"
 #include <iostream>
 
+Widget *Widget::_focused = nullptr;
+
 Widget::Widget(const std::vector<Styler> &styles, const std::vector<Widget *> &children) : _children(children)
 {
     for (auto styler : styles)
@@ -23,6 +25,10 @@ void Widget::applyStyler(Styler sr)
 {
     sr(_s);
 }
+
+bool Widget::isFocused() const { return Widget::_focused == this; }
+
+void Widget::clearFocus() { Widget::_focused = nullptr; }
 
 int Widget::top() const
 {
@@ -146,12 +152,26 @@ void Widget::addEvent(Handler handler)
     _events.push_back(handler);
 }
 
-bool Widget::handle(const genv::event &evt, const Vector2 cursor)
+bool Widget::handle(const genv::event &evt, const Vector2 cursor, bool &canCaptureFocus)
 {
+    if (canCaptureFocus && evt.button == genv::btn_left) {
+        if (containsPointM(cursor)) {
+            canCaptureFocus = false;
+            _focused = this;
+        } else {
+            clearFocus();
+        }
+    }
     for (auto &fn : _events)
     {
         if (fn(evt, cursor, *this))
             return true;
     }
     return false;
+}
+
+bool Widget::handle(const genv::event &evt, const Vector2 cursor)
+{
+    bool noFocusCapture = false;
+    return handle(evt, cursor, noFocusCapture);
 }

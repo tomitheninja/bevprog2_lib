@@ -54,9 +54,14 @@ public:
 
     // events
     void addEvent(Handler handler);
+    bool handle(const genv::event &evt, const Vector2 cursor, bool &canCaptureFocus);
     bool handle(const genv::event &evt, const Vector2 cursor);
 
     Widget *getParent();
+
+    bool isFocused() const;
+
+    static void clearFocus();
 
 protected:
     void _drawBg() const;
@@ -67,6 +72,7 @@ protected:
 
 private:
     Widget *_parent = nullptr;
+    static Widget *_focused;
 };
 
 #endif // WIDGET_H
