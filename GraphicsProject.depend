@@ -6,7 +6,7 @@
 	<string>
 	<vector>
 
-1619227354 source:c:\users\tomi\desktop\bead2\main.cpp
+1619231259 source:c:\users\tomi\desktop\bead2\main.cpp
 	"widget.h"
 	"label.h"
 	"container.h"
@@ -15,6 +15,7 @@
 	"number_picker.h"
 	"fixed_size_label.h"
 	"select.h"
+	<fstream>
 
 1619187741 c:\users\tomi\desktop\bead2\include\graphics.hpp
 	<string>
@@ -46,7 +47,7 @@
 1619207552 source:c:\users\tomi\desktop\bead2\src\label.cpp
 	"label.h"
 
-1619227929 source:c:\users\tomi\desktop\bead2\src\widget.cpp
+1619228081 source:c:\users\tomi\desktop\bead2\src\widget.cpp
 	"widget.h"
 	<iostream>
 
@@ -109,12 +110,12 @@
 1619219003 c:\users\tomi\desktop\bead2\include\fixed_size_label.h
 	"widget.h"
 
-1619227335 source:c:\users\tomi\desktop\bead2\src\select.cpp
+1619231101 source:c:\users\tomi\desktop\bead2\src\select.cpp
 	"select.h"
 	<algorithm>
 	<iterator>
 	"fixed_size_label.h"
 
-1619227059 c:\users\tomi\desktop\bead2\include\select.h
+1619231095 c:\users\tomi\desktop\bead2\include\select.h
 	"container.h"
 
