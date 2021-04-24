@@ -19,7 +19,7 @@ int main()
         new NumberPicker({[](Style &s) { s.position = {75, 100}; }}, 0, 100),
         new NumberPicker({[](Style &s) { s.position = {200, 100}; }}, -100, 100),
         new Select({"alma", "korte", "barack", "cseresznye" ,"dinnye", "vanilia", "csoki"}, {[](Style &s) { s.position = {75, 200}; s.size = {250, 30}; }}),
-        new Select({"piros", "feher", "zold", "ejjel" ,"negy", "ora", "van", "es", "meg", "el", "sem", "kezdtem", "a", "merest"}, {[](Style &s) { s.position = {200, 200}; s.size = {250, 30}; }})
+        new Select({"piros", "feher", "zold", "mar", "szombat", "hajnali" ,"negy", "van"}, {[](Style &s) { s.position = {200, 200}; s.size = {250, 30}; }})
     };
 
     Vector2 cursor;

@@ -14,11 +14,12 @@ class Select : public Container
         void scrollDown();
 
         std::string getValue() const;
+        void displayMany(int many);
 
     protected:
         void postChildDraw() const override;
         bool _isOpen;
-        int _many = 3;
+        int _many;
         int _offset = 0;
         int _selectedIdx = 0;
 

@@ -60,7 +60,7 @@ Select::Select(const std::vector<std::string> &options, const std::vector<Styler
         }
         if (isOpen())
         {
-            for (int i = 0; i + _offset < _children.size(); i++)
+            for (auto i = 0; i + _offset < _children.size(); i++)
             {
                 int j = i + _offset;
                 Widget *w = _children[j];
@@ -83,7 +83,7 @@ Select::Select(const std::vector<std::string> &options, const std::vector<Styler
     });
 
     // events
-    for (int i = 0; i < _children.size(); i++)
+    for (auto i = 0; i < _children.size(); i++)
     {
         _children[i]->addEvent([&, i](const genv::event &evt, const Vector2 &cursor, Widget &self) {
             // is hovered
@@ -108,6 +108,8 @@ Select::Select(const std::vector<std::string> &options, const std::vector<Styler
             return false;
         });
     }
+
+    displayMany(3);
 }
 
 void Select::postChildDraw() const
@@ -121,6 +123,10 @@ void Select::postChildDraw() const
 }
 
 Select::~Select() = default;
+
+void Select::displayMany(int many){
+    _many = std::min((int)_children.size(), std::max(1, many));
+}
 
 bool Select::isOpen() const { return _isOpen; }
 

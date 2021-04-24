@@ -18,7 +18,7 @@ void FixedSizeLabel::preChildDraw() const
     style.fgColor.apply();
     std::string ok = "";
     std::string next = "";
-    for(int i = 0; i < _text.length(); i++) {
+    for(auto i = 0; i < _text.length(); i++) {
         next += getText()[i];
         if (genv::gout.twidth(next) <= style.size.x())
         {
