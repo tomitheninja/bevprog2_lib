@@ -26,7 +26,7 @@ void FixedSizeLabel::preChildDraw() const
         } else { break; }
     }
     if (_centered) {
-        int space = (style.size.x() - genv::gout.twidth(next)) / 2;
+        int space = std::max(0, (style.size.x() - genv::gout.twidth(next)) / 2);
         (topLeft() + Vector2{space, 0}).move_to();
     } else {
         topLeft().move_to();

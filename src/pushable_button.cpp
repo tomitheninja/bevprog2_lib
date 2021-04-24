@@ -2,6 +2,8 @@
 
 PushableButton::PushableButton(const std::string &text, const std::vector<Styler> &styles, const std::vector<Styler> &lbStyles) : Button(text, styles, lbStyles)
 {
+    _children[0]->style.position = {5, 5};
+    _children[0]->style.marginRight = _children[0]->style.marginBottom = 5;
     auto &s = this->style;
     s.outerBorderTop = s.outerBorderBottom = s.outerBorderLeft = s.outerBorderRight = {true, Color{255, 255, 255}};
     s.bgColor.second = Color{32, 32, 32};

@@ -26,6 +26,30 @@ void Widget::applyStyler(Styler sr)
     sr(style);
 }
 
+void Widget::disable()
+{
+    if(!_self_disabled) {
+        _self_disabled = true;
+        _disabled += 1;
+        for (auto p_child: _children) p_child->disable();
+    }
+}
+
+void Widget::enable()
+{
+    if(_self_disabled)
+    {
+        _self_disabled = false;
+        _disabled -= 1;
+        for (auto p_child: _children) p_child->enable();
+    }
+}
+
+bool Widget::isEnabled() const
+{
+    return _disabled == 0;
+}
+
 bool Widget::isFocused() const { return Widget::_focused == this; }
 
 void Widget::clearFocus() { Widget::_focused = nullptr; }
@@ -69,6 +93,7 @@ bool Widget::containsPointM(const Vector2 &point) const
 
 void Widget::draw() const
 {
+    if (!isEnabled()) return;
     preDraw();
     preChildDraw();
     for (auto p_child : _children)
@@ -102,28 +127,27 @@ void Widget::_drawBg() const
 
 void Widget::_drawBorders() const
 {
-    // inner border
+        // inner border
     if (style.innerBorderTop.first)
     {
         style.innerBorderTop.second.apply();
-        topLeftM().line_to_abs(topRightM());
+        topLeft().line_to_abs(topRight());
     }
     if (style.innerBorderBottom.first)
     {
         style.innerBorderBottom.second.apply();
-        btmLeftM().line_to_abs(btmRightM());
+        btmLeft().line_to_abs(btmRight());
     }
     if (style.innerBorderLeft.first)
     {
         style.innerBorderLeft.second.apply();
-        btmLeftM().line_to_abs(topLeftM());
+        btmLeft().line_to_abs(topLeft());
     }
     if (style.innerBorderRight.first)
     {
         style.innerBorderRight.second.apply();
-        btmRightM().line_to_abs(topRightM());
+        btmRight().line_to_abs(topRight());
     }
-
     // outer border
     if (style.outerBorderTop.first)
     {
@@ -145,6 +169,7 @@ void Widget::_drawBorders() const
         style.outerBorderRight.second.apply();
         btmRightM().line_to_abs(topRightM());
     }
+
     // focus
     if (isFocused())
     {
@@ -163,6 +188,7 @@ void Widget::addEvent(Handler handler)
 
 bool Widget::handle(const genv::event &evt, const Vector2 cursor, bool &canCaptureFocus)
 {
+    if (!isEnabled()) return false;
     if (canCaptureFocus && evt.button == genv::btn_left)
     {
         if (containsPointM(cursor))

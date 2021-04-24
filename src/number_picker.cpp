@@ -1,15 +1,17 @@
 #include "number_picker.h"
 #include <algorithm>
 
-NumberPicker::NumberPicker(const std::vector<Styler> &styles, int lower, int upper) : Container(styles, {new Label("0", {[](Style &s) { s.isRelative = true; s.position = {15 , 15}; }}),
-                                                                                   new Button("+", {[](Style &s) { s.isRelative = true; s.position = {68, 3}; }}),
-                                                                                   new Button("-", {[](Style &s) { s.isRelative = true; s.position = {70, 20}; }})}),
+NumberPicker::NumberPicker(const std::vector<Styler> &styles, int lower, int upper) : Container(styles, {new Label("0", {[](Style &s) { s.isRelative = true; s.position = {10 , 10}; }}),
+                                                                                   new Button("-", {[](Style &s) { s.isRelative = true; s.position = {70, 20}; }}),
+                                                                                   new Button("+", {[](Style &s) { s.isRelative = true; s.position = {68, 0}; }}),
+                                                                                   }),
                                                                                    _lower(lower), _upper(upper)
 {
+    style.marginRight = 5;
     style.outerBorderTop = style.outerBorderBottom = style.outerBorderLeft = style.outerBorderRight = {true, Color{255, 255, 255}};
     lb = reinterpret_cast<Label *>(_children[0]);
-    btnIncr = reinterpret_cast<Button *>(_children[1]);
-    btnDecr = reinterpret_cast<Button *>(_children[2]);
+    btnIncr = reinterpret_cast<Button *>(_children[2]);
+    btnDecr = reinterpret_cast<Button *>(_children[1]);
 
     btnIncr->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self) {
         if (evt.button == genv::btn_left && self.containsPoint(cursor))

@@ -7,6 +7,7 @@
 
 struct Style
 {
+
     // is position relative to the parent?
     bool isRelative = false;
     Vector2 position = {0, 0};

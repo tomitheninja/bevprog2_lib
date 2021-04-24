@@ -8,7 +8,7 @@ Container::Container(const std::vector<Styler> &styles, const std::vector<Widget
         int bottomMost = self.top();
         for (auto p_child : _children)
         {
-            if (!p_child->style.isRelative)
+            if (!p_child->style.isRelative || !p_child->isEnabled())
             {
                 continue;
             }

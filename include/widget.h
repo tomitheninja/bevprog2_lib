@@ -62,6 +62,10 @@ public:
 
     Style style;
 
+    void enable();
+    void disable();
+    bool isEnabled() const;
+
 protected:
     // draw events
     virtual void preDraw() const;
@@ -76,6 +80,10 @@ protected:
     std::vector<Handler> _events;
 
 private:
+    // 0 = enabled
+    // 0+ = number of widgets needs to be enabled
+    unsigned int _disabled = 0;
+    bool _self_disabled = false;
     Widget *_parent = nullptr;
     static Widget *_focused;
 };

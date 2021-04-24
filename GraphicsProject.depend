@@ -6,7 +6,7 @@
 	<string>
 	<vector>
 
-1619219272 source:c:\users\tomi\desktop\bead2\main.cpp
+1619227354 source:c:\users\tomi\desktop\bead2\main.cpp
 	"widget.h"
 	"label.h"
 	"container.h"
@@ -14,6 +14,7 @@
 	"pushable_button.h"
 	"number_picker.h"
 	"fixed_size_label.h"
+	"select.h"
 
 1619187741 c:\users\tomi\desktop\bead2\include\graphics.hpp
 	<string>
@@ -39,17 +40,17 @@
 1619206190 c:\users\tomi\desktop\bead2\include\label.h
 	"Widget.h"
 
-1619209668 c:\users\tomi\desktop\bead2\include\widget.h
+1619228075 c:\users\tomi\desktop\bead2\include\widget.h
 	"styles.h"
 
 1619207552 source:c:\users\tomi\desktop\bead2\src\label.cpp
 	"label.h"
 
-1619214407 source:c:\users\tomi\desktop\bead2\src\widget.cpp
+1619227929 source:c:\users\tomi\desktop\bead2\src\widget.cpp
 	"widget.h"
 	<iostream>
 
-1619217856 source:c:\users\tomi\desktop\bead2\src\number_picker.cpp
+1619223677 source:c:\users\tomi\desktop\bead2\src\number_picker.cpp
 	"number_picker.h"
 	<algorithm>
 
@@ -78,33 +79,42 @@
 1619202000 source:c:\users\tomi\desktop\bead2\src\styles.cpp
 	"styles.h"
 
-1619204211 c:\users\tomi\desktop\bead2\include\styles.h
+1619223617 c:\users\tomi\desktop\bead2\include\styles.h
 	"color.h"
 	"vector2.h"
 	<functional>
 
-1619207033 source:c:\users\tomi\desktop\bead2\src\container.cpp
+1619223963 source:c:\users\tomi\desktop\bead2\src\container.cpp
 	"container.h"
 
 1619206297 c:\users\tomi\desktop\bead2\include\container.h
 	"Widget.h"
 
-1619213617 source:c:\users\tomi\desktop\bead2\src\button.cpp
+1619223477 source:c:\users\tomi\desktop\bead2\src\button.cpp
 	"button.h"
 
 1619209888 c:\users\tomi\desktop\bead2\include\button.h
 	"label.h"
 	"container.h"
 
-1619214220 source:c:\users\tomi\desktop\bead2\src\pushable_button.cpp
+1619223551 source:c:\users\tomi\desktop\bead2\src\pushable_button.cpp
 	"pushable_button.h"
 
 1619213902 c:\users\tomi\desktop\bead2\include\pushable_button.h
 	"button.h"
 
-1619219242 source:c:\users\tomi\desktop\bead2\src\fixed_size_label.cpp
+1619224329 source:c:\users\tomi\desktop\bead2\src\fixed_size_label.cpp
 	"fixed_size_label.h"
 
 1619219003 c:\users\tomi\desktop\bead2\include\fixed_size_label.h
 	"widget.h"
+
+1619227335 source:c:\users\tomi\desktop\bead2\src\select.cpp
+	"select.h"
+	<algorithm>
+	<iterator>
+	"fixed_size_label.h"
+
+1619227059 c:\users\tomi\desktop\bead2\include\select.h
+	"container.h"
 
