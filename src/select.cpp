@@ -13,7 +13,6 @@ std::vector<Widget *> optionsToLabels(const std::vector<std::string> &options)
                                              s.size.setX(100);
                                              s.marginLeft = 5;
                                              s.marginRight = 5;
-                                             s.position.setX(5);
                                          }},
                                          true);
         p_w->disable();
@@ -67,17 +66,24 @@ Select::Select(const std::vector<std::string> &options, const std::vector<Styler
                 // Only _children[_selectedIdx] has up-to-date size
                 w->style.position.setY(i * _children[_selectedIdx]->style.size.y());
                 w->style.bgMColor.first = false;
-                if (i < _many) w->enable();
+                if (i < _many)
+                    w->enable();
             }
             _children[_selectedIdx]->style.bgMColor = {true, Color(32, 32, 32)};
         }
         if (isOpen() && isFocused())
         {
-            if (evt.button == genv::btn_wheelup) scrollUp();
-            if (evt.button == genv::btn_wheeldown) scrollDown();
-        } else if (isFocused() && containsPoint(cursor)) {
-            if (evt.button == genv::btn_wheelup && _selectedIdx > 0) _selectedIdx--;
-            if (evt.button == genv::btn_wheeldown && _selectedIdx + 1 < _children.size()) _selectedIdx++;
+            if (evt.button == genv::btn_wheelup)
+                scrollUp();
+            if (evt.button == genv::btn_wheeldown)
+                scrollDown();
+        }
+        else if (isFocused() && containsPoint(cursor))
+        {
+            if (evt.button == genv::btn_wheelup && _selectedIdx > 0)
+                _selectedIdx--;
+            if (evt.button == genv::btn_wheeldown && _selectedIdx + 1 < _children.size())
+                _selectedIdx++;
         }
         return false;
     });
@@ -116,15 +122,16 @@ void Select::postChildDraw() const
 {
     if (!isOpen())
     {
-    (topRight() - Vector2{15, 1}).move_to();
-    Color(96, 128, 128).apply();
-    genv::gout << genv::text("v");
+        (topRight() - Vector2{15, 1}).move_to();
+        Color(96, 128, 128).apply();
+        genv::gout << genv::text("v");
     }
 }
 
 Select::~Select() = default;
 
-void Select::displayMany(int many){
+void Select::displayMany(int many)
+{
     _many = std::min((int)_children.size(), std::max(1, many));
 }
 
