@@ -1,7 +1,7 @@
 #ifndef LABEL_H
 #define LABEL_H
 
-#include "Widget.h"
+#include "widget.h"
 
 class Label : public Widget
 {

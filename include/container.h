@@ -1,7 +1,7 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
-#include "Widget.h"
+#include "widget.h"
 
 class Container : public Widget
 {
