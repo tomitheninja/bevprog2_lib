@@ -6,16 +6,17 @@
 
 class Button : public Container
 {
-    public:
-        Button(const std::string &text, const std::vector<Styler> &styles = {}, const std::vector<Styler> &lbStyles = {});
-        virtual ~Button();
+public:
+    Button(const std::string &text);
+    virtual ~Button();
 
-        std::string getText() const;
-        void setText(const std::string &newText);
-    protected:
+    std::string getText() const;
+    void setText(const std::string &newText);
 
-    private:
-        Label *_lb;
+    std::shared_ptr<Label> lb;
+
+protected:
+private:
 };
 
 #endif // BUTTON_H

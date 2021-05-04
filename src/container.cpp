@@ -1,12 +1,12 @@
 #include "container.h"
 
-Container::Container(const std::vector<Styler> &styles, const std::vector<Widget *> &children) : Widget(styles, children)
+Container::Container(std::vector<std::shared_ptr<Widget>> children) : Widget(std::move(children))
 {
+    // update size, so it contains all children elements
     addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self) {
-        // make big enough to contain all children
         int rightMost = self.left();
         int bottomMost = self.top();
-        for (auto p_child : _children)
+        for (const auto &p_child : _children)
         {
             if (!p_child->style.isRelative || !p_child->isEnabled())
             {

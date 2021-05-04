@@ -1,21 +1,11 @@
 #include "button.h"
 
-Button::Button(const std::string &text, const std::vector<Styler> &styles, const std::vector<Styler> &lbStyles) : Container({}, {new Label(text)})
+Button::Button(const std::string &text) : Container({std::make_shared<Label>(text)})
 {
-    _lb = reinterpret_cast<Label *>(_children[0]);
-    for (auto &mstyle : styles)
-    {
-        applyStyler(mstyle);
-    }
-    { // Label
-        auto &s = _lb->style;
-        s.isRelative = true;
-        for (auto &style : lbStyles)
-        {
-            _lb->applyStyler(style);
-        }
-    }
+    lb = std::static_pointer_cast<Label>(_children[0]);
+    lb->style.isRelative = true;
 
+    // change the background color on hover
     addEvent([](const genv::event &evt, const Vector2 &cursor, Widget &self) {
         self.style.bgMColor.first = self.containsPointM(cursor);
         return false;
@@ -24,5 +14,5 @@ Button::Button(const std::string &text, const std::vector<Styler> &styles, const
 
 Button::~Button() = default;
 
-std::string Button::getText() const { return _lb->getText(); }
-void Button::setText(const std::string &newText) { _lb->setText(newText); };
+std::string Button::getText() const { return lb->getText(); }
+void Button::setText(const std::string &newText) { lb->setText(newText); };

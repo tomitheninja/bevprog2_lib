@@ -1,37 +1,52 @@
 #include "number_picker.h"
 #include <algorithm>
 
-NumberPicker::NumberPicker(const std::vector<Styler> &styles, int lower, int upper) : Container(styles, {new Label("0", {[](Style &s) { s.isRelative = true; s.position = {10 , 10}; }}),
-                                                                                   new Button("-", {[](Style &s) { s.isRelative = true; s.position = {70, 20}; }}),
-                                                                                   new Button("+", {[](Style &s) { s.isRelative = true; s.position = {68, 0}; }}),
-                                                                                   }),
-                                                                                   _lower(lower), _upper(upper)
+NumberPicker::NumberPicker(int lower, int upper) : Container({
+                                                       std::make_shared<Label>("0"),
+                                                       std::make_shared<Button>("-"),
+                                                       std::make_shared<Button>("+"),
+                                                   }),
+                                                   _lower(lower), _upper(upper)
 {
     style.marginRight = 5;
     style.outerBorderTop = style.outerBorderBottom = style.outerBorderLeft = style.outerBorderRight = {true, Color{255, 255, 255}};
-    lb = reinterpret_cast<Label *>(_children[0]);
-    btnIncr = reinterpret_cast<Button *>(_children[2]);
-    btnDecr = reinterpret_cast<Button *>(_children[1]);
 
+    lb = static_cast<Label *>(&(*_children[0]));
+    btnIncr = static_cast<Button *>(&(*_children[1]));
+    btnDecr = static_cast<Button *>(&(*_children[2]));
+
+    btnIncr->style.isRelative = true;
+    lb->style.isRelative = true;
+    btnDecr->style.isRelative = true;
+    lb->style.position = {10, 10};
+    btnDecr->style.position = {68, 0};
+    btnIncr->style.position = {70, 20};
+
+    // Increment on click
     btnIncr->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self) {
-        if (evt.button == genv::btn_left && self.containsPoint(cursor))
+        if (evt.button == genv::btn_left && self.containsPointM(cursor))
         {
             setValue(getValue() + 1);
             return true;
         }
         return false;
     });
+
+    // Decrement on click
     btnDecr->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self) {
-        if (evt.button == genv::btn_left && self.containsPoint(cursor))
+        if (evt.button == genv::btn_left && self.containsPointM(cursor))
         {
             setValue(getValue() - 1);
             return true;
         }
         return false;
     });
+
+    // Keyboard control
     addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self) {
         lb->setText(std::to_string(_value));
-        if (isFocused()) {
+        if (isFocused())
+        {
             switch (evt.keycode)
             {
             case genv::key_up:

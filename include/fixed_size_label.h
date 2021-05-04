@@ -3,23 +3,21 @@
 
 #include "widget.h"
 
-
 class FixedSizeLabel : public Widget
 {
-    public:
-        FixedSizeLabel(const std::string &text, const std::vector<Styler> &styles = {}, bool centered = false);
-        virtual ~FixedSizeLabel();
+public:
+    FixedSizeLabel(const std::string &text, bool centered = false);
+    virtual ~FixedSizeLabel();
 
-        std::string getText() const;
-        void setText(const std::string &text);
+    std::string getText() const;
+    void setText(const std::string &text);
 
-    protected:
-        void preChildDraw() const override;
-        std::string _text;
-        bool _centered;
+protected:
+    void preChildDraw() const override;
+    std::string _text;
+    bool _centered;
 
-
-    private:
+private:
 };
 
 #endif // FIXED_SIZE_LABEL_H

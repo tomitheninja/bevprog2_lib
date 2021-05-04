@@ -8,19 +8,20 @@
 
 class NumberPicker : public Container
 {
-    public:
-        NumberPicker(const std::vector<Styler> &styles, int lower, int upper);
-        Label *lb;
-        Button *btnIncr;
-        Button *btnDecr;
-        void setValue(int value);
-        int getValue();
-    protected:
-        int _value = 0;
-    private:
-        int _lower;
-        int _upper;
+public:
+    NumberPicker(int lower, int upper);
+    Label *lb;
+    Button *btnIncr;
+    Button *btnDecr;
+    void setValue(int value);
+    int getValue();
 
+protected:
+    int _value = 0;
+
+private:
+    int _lower;
+    int _upper;
 };
 
 #endif // NUMBERPICKER_H

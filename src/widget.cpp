@@ -3,23 +3,17 @@
 
 Widget *Widget::_focused = nullptr;
 
-Widget::Widget(const std::vector<Styler> &styles, const std::vector<Widget *> &children) : _children(children)
+Widget::Widget(std::vector<std::shared_ptr<Widget>> children) : _children(std::move(children))
 {
-    for (auto styler : styles)
-    {
-        applyStyler(styler);
-    }
-    for (auto p_child : _children)
+    for (auto &p_child : _children)
     {
         p_child->_parent = this;
     }
 }
 
-Widget::~Widget()
-{
-    for (auto p_child : _children)
-        delete p_child;
-}
+Widget::Widget(Widget &&) = default;
+
+Widget::~Widget() = default;
 
 void Widget::disable()
 {
@@ -27,7 +21,7 @@ void Widget::disable()
     {
         _self_disabled = true;
         _disabled += 1;
-        for (auto p_child : _children)
+        for (auto &p_child : _children)
             p_child->disable();
     }
 }
@@ -38,7 +32,7 @@ void Widget::enable()
     {
         _self_disabled = false;
         _disabled -= 1;
-        for (auto p_child : _children)
+        for (auto &p_child : _children)
             p_child->enable();
     }
 }
@@ -58,7 +52,7 @@ void Widget::draw() const
         return;
     preDraw();
     preChildDraw();
-    for (auto p_child : _children)
+    for (const auto &p_child : _children)
     {
         p_child->draw();
     }
@@ -113,7 +107,8 @@ bool Widget::handle(const genv::event &evt, const Vector2 cursor)
 
 int Widget::topM() const
 {
-    return Renderable::topM() + (style.isRelative ? _parent->topM() : 0);
+    auto parentTop = style.isRelative ? _parent->topM() : 0;
+    return Renderable::topM() + parentTop;
 }
 
 int Widget::leftM() const

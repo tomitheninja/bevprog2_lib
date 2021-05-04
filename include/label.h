@@ -6,7 +6,7 @@
 class Label : public Widget
 {
 public:
-    Label(const std::string &text, const std::vector<Styler> &styles = {});
+    Label(const std::string &text);
     virtual ~Label();
 
     std::string getText() const;

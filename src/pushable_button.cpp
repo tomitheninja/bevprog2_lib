@@ -1,6 +1,6 @@
 #include "pushable_button.h"
 
-PushableButton::PushableButton(const std::string &text, const std::vector<Styler> &styles, const std::vector<Styler> &lbStyles) : Button(text, styles, lbStyles)
+PushableButton::PushableButton(const std::string &text) : Button(text)
 {
     _children[0]->style.position = {5, 5};
     _children[0]->style.marginRight = _children[0]->style.marginBottom = 5;

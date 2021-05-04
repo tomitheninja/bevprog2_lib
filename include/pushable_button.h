@@ -5,15 +5,14 @@
 
 class PushableButton : public Button
 {
-    public:
-        PushableButton(const std::string &text, const std::vector<Styler> &styles = {}, const std::vector<Styler> &lbStyles = {});
-        virtual ~PushableButton();
-        Color hoverColor;
+public:
+    PushableButton(const std::string &text);
+    virtual ~PushableButton();
+    Color hoverColor;
 
-    protected:
-
-    private:
-        Color _preHoverColor;
+protected:
+private:
+    Color _preHoverColor;
 };
 
 #endif // PUSHABLEBUTTON_H

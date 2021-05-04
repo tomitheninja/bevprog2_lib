@@ -1,8 +1,9 @@
 #include "label.h"
 
-Label::Label(const std::string &text, const std::vector<Styler> &styles) : Widget(styles)
+Label::Label(const std::string &text) : Widget()
 {
     setText(text);
+    // update size, so it constains the text
     addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self) {
         self.style.size.setX(genv::gout.twidth(getText()));
         self.style.size.setY(genv::gout.cascent() + genv::gout.cdescent());

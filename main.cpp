@@ -1,13 +1,24 @@
 
+// #include "widget.h"
+// #include "label.h"
+// #include "container.h"
+// #include "button.h"
+// #include "pushable_button.h"
+// #include "number_picker.h"
+// #include "fixed_size_label.h"
+// #include "select.h"
+#include <fstream>
+
 #include "widget.h"
-#include "label.h"
 #include "container.h"
+#include "label.h"
+#include "fixed_size_label.h"
 #include "button.h"
+#include "fixed_size_label.h"
 #include "pushable_button.h"
 #include "number_picker.h"
-#include "fixed_size_label.h"
 #include "select.h"
-#include <fstream>
+#include "pushable_button.h"
 
 int main()
 {
@@ -15,12 +26,15 @@ int main()
     genv::gout.open(screen.x(), screen.y());
     genv::gout << genv::font("LiberationSans-Regular.ttf", 20);
 
-    std::vector<Widget *> ws {
-        new NumberPicker({[](Style &s) { s.position = {75, 100}; }}, 0, 100),
-        new NumberPicker({[](Style &s) { s.position = {200, 100}; }}, -100, 100),
-        new Select({"alma", "korte", "barack", "cseresznye" ,"dinnye", "vanilia", "csoki"}, {[](Style &s) { s.position = {75, 200}; s.size = {250, 30}; }}),
-        new Select({"piros", "feher", "zold", "mar", "szombat", "hajnali" ,"negy", "van"}, {[](Style &s) { s.position = {200, 200}; s.size = {250, 30}; }})
+    std::vector<std::shared_ptr<Widget>> ws{
+        std::make_shared<NumberPicker>(-100, 100),
+        std::make_shared<Select>(std::vector<std::string> {"foo", "bar", "baz", "quux", "pite"}),
+        std::make_shared<PushableButton>("press me")
+        // std::make_unique<Select>({"piros", "feher", "zold", "mar", "szombat", "hajnali", "negy", "van"})};
     };
+
+    ws[0]->style.position = {100, 100};
+    ws[1]->style.position = {200, 10};
 
     Vector2 cursor;
     genv::event ev;
@@ -37,21 +51,23 @@ int main()
         if (ev.keycode == genv::key_space)
         {
             std::ofstream f("log.txt");
-            for(auto w: ws)
+            for (const auto &unique_w : ws)
             {
-                if (auto* p_np = dynamic_cast<NumberPicker*>(w))
+                Widget *w = &(*unique_w);
+                if (auto *p_np = dynamic_cast<NumberPicker *>(w))
                 {
                     f << "NumberPicker(" << p_np->getValue() << ")\n";
-                } else if (auto* n_s = dynamic_cast<Select*>(w))
+                }
+                else if (auto* p_s = dynamic_cast<Select*>(w))
                 {
-                    f << "Select(" << n_s->getValue() << ")\n";
+                    f << "Select(" << p_s->getValue() << ")\n";
                 }
             }
             f.close();
         }
 
         bool focus = true;
-        for (auto& w: ws)
+        for (auto &w : ws)
         {
             w->handle(ev, cursor, focus);
             w->draw();
@@ -59,6 +75,5 @@ int main()
 
         genv::gout << genv::refresh;
     }
-    for(auto& w: ws) delete w;
     return 0;
 }

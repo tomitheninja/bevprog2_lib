@@ -3,41 +3,27 @@
 #include <iterator>
 #include "fixed_size_label.h"
 
-std::vector<Widget *> optionsToLabels(const std::vector<std::string> &options)
+// maps options to disabled FixedSizeLabel-s
+std::vector<std::shared_ptr<Widget>> optionsToLabels(const std::vector<std::string> &options)
 {
-    std::vector<Widget *> result;
-    for (auto &option : options)
+    std::vector<std::shared_ptr<Widget>> result;
+    for (auto &txt : options)
     {
-        Widget *p_w = new FixedSizeLabel(option, {[](Style &s) {
-                                             s.isRelative = true;
-                                             s.size.setX(100);
-                                             s.marginLeft = 5;
-                                             s.marginRight = 5;
-                                         }},
-                                         true);
+        std::shared_ptr<Widget> p_w = std::make_unique<FixedSizeLabel>(txt, true);
+        p_w->style.isRelative = true;
+        p_w->style.size.setX(100);
+        p_w->style.marginLeft = 5;
+        p_w->style.marginRight = 5;
         p_w->disable();
         result.push_back(p_w);
     }
     return result;
 }
 
-void Select::scrollUp()
-{
-    if (_offset > 0)
-        _offset--;
-}
-
-void Select::scrollDown()
-{
-    if (_offset + 1 <= _children.size() - _many)
-        _offset++;
-}
-
-Select::Select(const std::vector<std::string> &options, const std::vector<Styler> &styles) : Container(styles, optionsToLabels(options))
+Select::Select(const std::vector<std::string>& options) : Container(optionsToLabels(options))
 {
     style.size.setX(150);
-    _isOpen = true;
-    style.marginBottom = 2;
+    _isOpen = false;
     style.innerBorderTop = style.innerBorderBottom = style.innerBorderLeft = style.innerBorderRight = {true, Color{255, 255, 255}};
 
     addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self) {
@@ -52,22 +38,22 @@ Select::Select(const std::vector<std::string> &options, const std::vector<Styler
         }
         if (!isOpen())
         {
-            Widget *w = _children[_selectedIdx];
-            w->style.position.setY(0); // On the top
-            w->style.bgMColor = {true, Color(32, 32, 32)};
-            w->enable();
+            Widget& w = *_children[_selectedIdx];
+            w.style.position.setY(0); // On the top
+            w.style.bgMColor = {true, Color(32, 32, 32)};
+            w.enable();
         }
         if (isOpen())
         {
             for (auto i = 0; i + _offset < _children.size(); i++)
             {
                 int j = i + _offset;
-                Widget *w = _children[j];
+                Widget& w = *_children[j];
                 // Only _children[_selectedIdx] has up-to-date size
-                w->style.position.setY(i * _children[_selectedIdx]->style.size.y());
-                w->style.bgMColor.first = false;
+                w.style.position.setY(i * _children[_selectedIdx]->style.size.y());
+                w.style.bgMColor.first = false;
                 if (i < _many)
-                    w->enable();
+                    w.enable();
             }
             _children[_selectedIdx]->style.bgMColor = {true, Color(32, 32, 32)};
         }
@@ -122,7 +108,7 @@ void Select::postChildDraw() const
 {
     if (!isOpen())
     {
-        (topRight() - Vector2{15, 1}).move_to();
+        (topRight() - Vector2{15, 0}).move_to();
         Color(96, 128, 128).apply();
         genv::gout << genv::text("v");
     }
@@ -139,5 +125,15 @@ bool Select::isOpen() const { return _isOpen; }
 
 std::string Select::getValue() const
 {
-    return reinterpret_cast<FixedSizeLabel *>(_children[_selectedIdx])->getText();
+    Widget& w = *_children[_selectedIdx];
+    return static_cast<FixedSizeLabel *>(&w)->getText();
+}
+
+void Select::scrollUp()
+{
+    _offset = std::max(0, _offset - 1);
+}
+
+void Select::scrollDown(){
+    _offset = std::min((int)(_children.size() - _many), _offset + 1);
 }

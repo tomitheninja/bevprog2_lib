@@ -3,10 +3,11 @@
 
 #include "widget.h"
 
+// A widget that auto resizes itself to contain all children elements
 class Container : public Widget
 {
 public:
-    Container(const std::vector<Styler> &styles = {}, const std::vector<Widget *> &children = {});
+    Container(std::vector<std::shared_ptr<Widget>> children);
     virtual ~Container();
 
 protected:

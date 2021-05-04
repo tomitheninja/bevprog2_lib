@@ -119,18 +119,21 @@
 1619231859 c:\users\tomi\desktop\bead2\include\select.h
 	"container.h"
 
-1620157661 source:c:\users\tomi\desktop\bevprog2_bead3\main.cpp
+1620170159 source:c:\users\tomi\desktop\bevprog2_bead3\main.cpp
+	<fstream>
 	"widget.h"
-	"label.h"
 	"container.h"
+	"label.h"
+	"fixed_size_label.h"
 	"button.h"
+	"fixed_size_label.h"
 	"pushable_button.h"
 	"number_picker.h"
-	"fixed_size_label.h"
 	"select.h"
-	<fstream>
+	"pushable_button.h"
 
-1620159048 c:\users\tomi\desktop\bevprog2_bead3\include\widget.h
+1620170428 c:\users\tomi\desktop\bevprog2_bead3\include\widget.h
+	<memory>
 	"renderable.h"
 
 1620158715 c:\users\tomi\desktop\bevprog2_bead3\include\renderable.h
@@ -157,54 +160,54 @@
 	"vector2.h"
 	<functional>
 
-1620157699 c:\users\tomi\desktop\bevprog2_bead3\include\label.h
+1620162965 c:\users\tomi\desktop\bevprog2_bead3\include\label.h
 	"widget.h"
 
-1620157693 c:\users\tomi\desktop\bevprog2_bead3\include\container.h
+1620165879 c:\users\tomi\desktop\bevprog2_bead3\include\container.h
 	"widget.h"
 
-1620157661 c:\users\tomi\desktop\bevprog2_bead3\include\button.h
+1620168363 c:\users\tomi\desktop\bevprog2_bead3\include\button.h
 	"label.h"
 	"container.h"
 
-1620157661 c:\users\tomi\desktop\bevprog2_bead3\include\pushable_button.h
+1620165971 c:\users\tomi\desktop\bevprog2_bead3\include\pushable_button.h
 	"button.h"
 
-1620157661 c:\users\tomi\desktop\bevprog2_bead3\include\number_picker.h
+1620165999 c:\users\tomi\desktop\bevprog2_bead3\include\number_picker.h
 	"widget.h"
 	"label.h"
 	"button.h"
 	"container.h"
 
-1620157661 c:\users\tomi\desktop\bevprog2_bead3\include\fixed_size_label.h
+1620164281 c:\users\tomi\desktop\bevprog2_bead3\include\fixed_size_label.h
 	"widget.h"
 
-1620157661 c:\users\tomi\desktop\bevprog2_bead3\include\select.h
+1620169680 c:\users\tomi\desktop\bevprog2_bead3\include\select.h
 	"container.h"
 
-1620157661 source:c:\users\tomi\desktop\bevprog2_bead3\src\button.cpp
+1620168401 source:c:\users\tomi\desktop\bevprog2_bead3\src\button.cpp
 	"button.h"
 
 1620157661 source:c:\users\tomi\desktop\bevprog2_bead3\src\color.cpp
 	"color.h"
 
-1620157661 source:c:\users\tomi\desktop\bevprog2_bead3\src\container.cpp
+1620168448 source:c:\users\tomi\desktop\bevprog2_bead3\src\container.cpp
 	"container.h"
 
-1620157661 source:c:\users\tomi\desktop\bevprog2_bead3\src\fixed_size_label.cpp
+1620164285 source:c:\users\tomi\desktop\bevprog2_bead3\src\fixed_size_label.cpp
 	"fixed_size_label.h"
 
-1620157661 source:c:\users\tomi\desktop\bevprog2_bead3\src\label.cpp
+1620168457 source:c:\users\tomi\desktop\bevprog2_bead3\src\label.cpp
 	"label.h"
 
-1620157661 source:c:\users\tomi\desktop\bevprog2_bead3\src\number_picker.cpp
+1620168678 source:c:\users\tomi\desktop\bevprog2_bead3\src\number_picker.cpp
 	"number_picker.h"
 	<algorithm>
 
-1620157661 source:c:\users\tomi\desktop\bevprog2_bead3\src\pushable_button.cpp
+1620165975 source:c:\users\tomi\desktop\bevprog2_bead3\src\pushable_button.cpp
 	"pushable_button.h"
 
-1620157661 source:c:\users\tomi\desktop\bevprog2_bead3\src\select.cpp
+1620169807 source:c:\users\tomi\desktop\bevprog2_bead3\src\select.cpp
 	"select.h"
 	<algorithm>
 	<iterator>
@@ -216,10 +219,10 @@
 1620157661 source:c:\users\tomi\desktop\bevprog2_bead3\src\vector2.cpp
 	"vector2.h"
 
-1620158901 source:c:\users\tomi\desktop\bevprog2_bead3\src\renderable.cpp
+1620168597 source:c:\users\tomi\desktop\bevprog2_bead3\src\renderable.cpp
 	"renderable.h"
 
-1620159109 source:c:\users\tomi\desktop\bevprog2_bead3\src\widget.cpp
+1620167470 source:c:\users\tomi\desktop\bevprog2_bead3\src\widget.cpp
 	"widget.h"
 	<iostream>
 

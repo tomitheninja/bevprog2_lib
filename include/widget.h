@@ -1,6 +1,7 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include <memory>
 #include "renderable.h"
 
 class Widget;
@@ -12,7 +13,8 @@ typedef std::function<bool(const genv::event &evt, const Vector2 &cursor, Widget
 class Widget : public Renderable
 {
 public:
-    Widget(const std::vector<Styler> &styles = {}, const std::vector<Widget *> &children = {});
+    Widget(std::vector<std::shared_ptr<Widget>> children = {});
+    Widget(Widget &&);
     virtual ~Widget();
 
     // calls draw events
@@ -23,18 +25,19 @@ public:
     bool handle(const genv::event &evt, const Vector2 cursor, bool &canCaptureFocus);
     bool handle(const genv::event &evt, const Vector2 cursor);
 
+    // parent
     Widget *getParent();
 
+    // focus
     bool isFocused() const;
-
-    void update(); // recalculate properties
-
     static void clearFocus();
 
+    // enable-disable
     void enable();
     void disable();
     bool isEnabled() const;
 
+    // overrides
     int topM() const override; // override to achieve relative positioning
     int leftM() const override;
 
@@ -45,13 +48,11 @@ protected:
     virtual void postChildDraw() const;
     virtual void postDraw() const;
 
-    std::vector<Widget *> _children;
+    std::vector<std::shared_ptr<Widget>> _children;
     std::vector<Handler> _events;
 
 private:
-    // 0 = enabled
-    // 0+ = number of widgets needs to be enabled
-    unsigned int _disabled = 0;
+    unsigned int _disabled = 0; // number of parents disabled
     bool _self_disabled = false;
     Widget *_parent = nullptr;
     static Widget *_focused;
