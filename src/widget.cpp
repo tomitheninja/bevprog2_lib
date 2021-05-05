@@ -115,3 +115,9 @@ int Widget::leftM() const
 {
     return Renderable::leftM() + (style.isRelative ? _parent->leftM() : 0);
 }
+
+void Widget::setParent(Widget* parent)
+{
+    if (_parent) std::cerr << "[WARN] overriding parent\n";
+    _parent = parent;
+}

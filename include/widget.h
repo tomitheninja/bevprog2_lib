@@ -41,6 +41,8 @@ public:
     int topM() const override; // override to achieve relative positioning
     int leftM() const override;
 
+    void setParent(Widget* p_parent);
+
 protected:
     // draw events
     virtual void preDraw() const;

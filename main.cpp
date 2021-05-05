@@ -29,12 +29,18 @@ int main()
     std::vector<std::shared_ptr<Widget>> ws{
         std::make_shared<NumberPicker>(-100, 100),
         std::make_shared<Select>(std::vector<std::string> {"foo", "bar", "baz", "quux", "pite"}),
+        std::make_shared<Select>(std::vector<std::string> {"foo"}),
         std::make_shared<PushableButton>("press me")
         // std::make_unique<Select>({"piros", "feher", "zold", "mar", "szombat", "hajnali", "negy", "van"})};
     };
 
     ws[0]->style.position = {100, 100};
     ws[1]->style.position = {200, 10};
+    ws[2]->style.position = {0, 300};
+
+    Select& s = (Select&)*ws[2];
+    s.appendOption("almafa");
+    s.appendOption("korte");
 
     Vector2 cursor;
     genv::event ev;

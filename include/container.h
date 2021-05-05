@@ -7,7 +7,7 @@
 class Container : public Widget
 {
 public:
-    Container(std::vector<std::shared_ptr<Widget>> children);
+    Container(std::vector<std::shared_ptr<Widget>> children = {});
     virtual ~Container();
 
 protected:
