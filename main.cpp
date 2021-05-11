@@ -7,9 +7,9 @@
 // #include "number_picker.h"
 // #include "fixed_size_label.h"
 // #include "select.h"
-#include <fstream>
+// #include <fstream>
 
-#include "widget.h"
+/*#include "widget.h"
 #include "container.h"
 #include "label.h"
 #include "fixed_size_label.h"
@@ -18,34 +18,44 @@
 #include "pushable_button.h"
 #include "number_picker.h"
 #include "select.h"
-#include "pushable_button.h"
+#include "pushable_button.h"*/
+#include "cell.h"
 
 int main()
 {
-    Vector2 screen(400, 400);
+    Vector2 screen(15*32 + 1, 15*32 + 1);
     genv::gout.open(screen.x(), screen.y());
     genv::gout << genv::font("LiberationSans-Regular.ttf", 20);
-
-    std::vector<std::shared_ptr<Widget>> ws{
-        std::make_shared<NumberPicker>(-100, 100),
-        std::make_shared<Select>(std::vector<std::string> {"foo", "bar", "baz", "quux", "pite"}),
-        std::make_shared<Select>(std::vector<std::string> {"foo"}),
-        std::make_shared<PushableButton>("press me")
-        // std::make_unique<Select>({"piros", "feher", "zold", "mar", "szombat", "hajnali", "negy", "van"})};
-    };
-
-    ws[0]->style.position = {100, 100};
-    ws[1]->style.position = {200, 10};
-    ws[2]->style.position = {0, 300};
-
-    Select& s = (Select&)*ws[2];
-    s.appendOption("almafa");
-    s.appendOption("korte");
 
     Vector2 cursor;
     genv::event ev;
     genv::gin.timer(1000 / 64);
-    while (genv::gin >> ev && ev.keycode != genv::key_escape)
+
+    std::vector<Cell> cells;
+
+    bool isWhiteNext = true;
+
+    cells.reserve(15 *15);
+    for(int y = 0; y < 15; y++)
+    {
+        for (int x = 0; x < 15; x++)
+        {
+            cells.push_back(Cell({32, 32}, {32*x, 32*y}));
+            auto& c = cells[cells.size() - 1];
+            c.addEvent([&](const genv::event& ev, const Vector2& cursor, Widget& self) {
+                if (c.isEmpty() && self.containsPoint(cursor) && ev.button == genv::btn_left)
+                {
+                    c.setPlayer(isWhiteNext);
+                    isWhiteNext = !isWhiteNext;
+                    return true;
+                }
+                return false;
+            });
+
+        }
+    }
+
+    while (genv::gin >> ev)
     {
         screen.clear();
 
@@ -54,32 +64,14 @@ int main()
             cursor = {ev.pos_x, ev.pos_y};
         }
 
-        if (ev.keycode == genv::key_space)
+        for(auto& c: cells)
         {
-            std::ofstream f("log.txt");
-            for (const auto &unique_w : ws)
-            {
-                Widget *w = &(*unique_w);
-                if (auto *p_np = dynamic_cast<NumberPicker *>(w))
-                {
-                    f << "NumberPicker(" << p_np->getValue() << ")\n";
-                }
-                else if (auto* p_s = dynamic_cast<Select*>(w))
-                {
-                    f << "Select(" << p_s->getValue() << ")\n";
-                }
-            }
-            f.close();
-        }
-
-        bool focus = true;
-        for (auto &w : ws)
-        {
-            w->handle(ev, cursor, focus);
-            w->draw();
+            c.handle(ev, cursor);
+            c.draw();
         }
 
         genv::gout << genv::refresh;
     }
+
     return 0;
 }

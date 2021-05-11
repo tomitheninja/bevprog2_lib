@@ -11,8 +11,6 @@ Widget::Widget(std::vector<std::shared_ptr<Widget>> children) : _children(std::m
     }
 }
 
-Widget::Widget(Widget &&) = default;
-
 Widget::~Widget() = default;
 
 void Widget::disable()

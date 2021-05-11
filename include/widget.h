@@ -14,7 +14,6 @@ class Widget : public Renderable
 {
 public:
     Widget(std::vector<std::shared_ptr<Widget>> children = {});
-    Widget(Widget &&);
     virtual ~Widget();
 
     // calls draw events
