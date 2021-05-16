@@ -86,7 +86,8 @@ bool Widget::handle(const genv::event &evt, const Vector2 cursor, bool &canCaptu
     }
     for (auto &fn : _events)
     {
-        if (fn(evt, cursor, *this))
+        bool handled = fn(evt, cursor, *this);
+        if (handled)
             return true;
     }
     for (auto &p_child : _children)

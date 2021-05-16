@@ -53,6 +53,7 @@
 			<Add library="dxguid" />
 			<Add directory="lib" />
 		</Linker>
+		<Unit filename="include/application.h" />
 		<Unit filename="include/button.h" />
 		<Unit filename="include/cell.h" />
 		<Unit filename="include/color.h" />
@@ -67,6 +68,7 @@
 		<Unit filename="include/vector2.h" />
 		<Unit filename="include/widget.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/application.cpp" />
 		<Unit filename="src/button.cpp" />
 		<Unit filename="src/cell.cpp" />
 		<Unit filename="src/color.cpp" />

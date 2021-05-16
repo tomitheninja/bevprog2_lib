@@ -82,7 +82,8 @@ public:
   {
     if (new_x & ~4095)
     {
-      std::cerr << ("x should not be negative or too large!\n");
+        if (new_x < 0) new_x = 0;
+        //std::cerr << ("x should not be negative or too large!\n");
     }
     _x = new_x;
   }
@@ -91,7 +92,8 @@ public:
   {
     if (new_y & ~4095)
     {
-      std::cerr << ("y should not be negative or too large!\n");
+        if (new_y < 0) new_y = 0;
+        //std::cerr << ("y should not be negative or too large!\n");
     }
     _y = new_y;
   }
