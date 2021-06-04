@@ -1,19 +1,26 @@
 #include "application.h"
 
+#include "checkbox.h"
+
 Application::Application()
 {
     _screen = Vector2(640, 480);
     genv::gout.open(_screen.x(), _screen.y());
     genv::gout << genv::font("LiberationSans-Regular.ttf", 20);
 
-    genv::gin.timer(1000 / 10);
-
-    genv::gout.showmouse(false);
+    genv::gin.timer(1000 / 8);
 
     auto x = std::make_shared<TextInput>();
     x->lb->setText("insert text");
 
+    x->style.position = {100, 100};
+
     _ws.push_back(x);
+
+    auto y = std::make_shared<CheckBox>();
+    y->style.position = {200, 200};
+
+    _ws.push_back(y);
 }
 
 Application::~Application() = default;

@@ -1,14 +1,15 @@
 #include "text_input.h"
 
-TextInput::TextInput() : Widget()
+TextInput::TextInput() : Widget({std::make_shared<FixedSizeLabel>("")})
 {
-    style.size = {150, 50};
+    style.size = {200, 25};
     style.innerBorderBottom = {true, Color(255, 255, 255)};
     style.innerBorderTop = {true, Color(255, 255, 255)};
     style.innerBorderLeft = {true, Color(255, 255, 255)};
     style.innerBorderRight = {true, Color(255, 255, 255)};
 
-    lb = std::make_shared<FixedSizeLabel>("");
+    lb = std::static_pointer_cast<FixedSizeLabel>(_children[0]);
+    lb->style.isRelative = true;
 
     lb->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
                  {
@@ -27,7 +28,7 @@ TextInput::TextInput() : Widget()
                          else
                          {
                              toggleInsert();
-                             return false;
+                             return true;
                          }
                      }
                      else if (evt.type == genv::ev_key && (self.containsPoint(cursor) || isFocused()))

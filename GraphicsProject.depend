@@ -229,13 +229,23 @@
 	"button.h"
 	"text_input.h"
 
-1622764917 source:c:\users\tomi\desktop\bevprog2_bead3\src\application.cpp
+1622800667 source:c:\users\tomi\desktop\bevprog2_bead3\src\application.cpp
 	"application.h"
+	"checkbox.h"
 
 1622764371 c:\users\tomi\desktop\bevprog2_bead3\include\text_input.h
 	"widget.h"
 	"fixed_size_label.h"
 
-1622764762 source:c:\users\tomi\desktop\bevprog2_bead3\src\text_input.cpp
+1622800527 source:c:\users\tomi\desktop\bevprog2_bead3\src\text_input.cpp
 	"text_input.h"
+
+1622800606 source:c:\users\tomi\desktop\bevprog2_bead3\src\checkbox.cpp
+	"checkbox.h"
+
+1622799578 c:\users\tomi\desktop\bevprog2_bead3\include\checkbox.h
+	"container.h"
+	"fixed_size_label.h"
+	"label.h"
+	<memory>
 
