@@ -77,7 +77,7 @@ bool Widget::handle(const genv::event &evt, const Vector2 cursor, bool &canCaptu
         if (containsPointM(cursor))
         {
             canCaptureFocus = false;
-            _focused = this;
+            this->focus();
         }
         else
         {
@@ -115,8 +115,14 @@ int Widget::leftM() const
     return Renderable::leftM() + (style.isRelative ? _parent->leftM() : 0);
 }
 
-void Widget::setParent(Widget* parent)
+void Widget::setParent(Widget *parent)
 {
-    if (_parent) std::cerr << "[WARN] overriding parent\n";
+    if (_parent)
+        std::cerr << "[WARN] overriding parent\n";
     _parent = parent;
+}
+
+void Widget::focus()
+{
+    _focused = this;
 }

@@ -41,9 +41,9 @@ bool Application::tick()
         _cursor = {_ev.pos_x, _ev.pos_y};
     }
 
+    bool focus = true;
     for (auto &w : _ws)
     {
-        bool focus = true;
         if (w->handle(_ev, _cursor, focus))
             break;
     }

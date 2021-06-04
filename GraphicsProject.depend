@@ -122,7 +122,7 @@
 1622756929 source:c:\users\tomi\desktop\bevprog2_bead3\main.cpp
 	"application.h"
 
-1622756929 c:\users\tomi\desktop\bevprog2_bead3\include\widget.h
+1622802084 c:\users\tomi\desktop\bevprog2_bead3\include\widget.h
 	<memory>
 	"renderable.h"
 
@@ -210,7 +210,7 @@
 1622756929 source:c:\users\tomi\desktop\bevprog2_bead3\src\renderable.cpp
 	"renderable.h"
 
-1622764933 source:c:\users\tomi\desktop\bevprog2_bead3\src\widget.cpp
+1622802106 source:c:\users\tomi\desktop\bevprog2_bead3\src\widget.cpp
 	"widget.h"
 	<iostream>
 
@@ -229,7 +229,7 @@
 	"button.h"
 	"text_input.h"
 
-1622800667 source:c:\users\tomi\desktop\bevprog2_bead3\src\application.cpp
+1622802031 source:c:\users\tomi\desktop\bevprog2_bead3\src\application.cpp
 	"application.h"
 	"checkbox.h"
 
@@ -240,7 +240,7 @@
 1622800527 source:c:\users\tomi\desktop\bevprog2_bead3\src\text_input.cpp
 	"text_input.h"
 
-1622800606 source:c:\users\tomi\desktop\bevprog2_bead3\src\checkbox.cpp
+1622802116 source:c:\users\tomi\desktop\bevprog2_bead3\src\checkbox.cpp
 	"checkbox.h"
 
 1622799578 c:\users\tomi\desktop\bevprog2_bead3\include\checkbox.h

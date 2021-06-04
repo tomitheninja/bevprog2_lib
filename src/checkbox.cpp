@@ -14,6 +14,15 @@ CheckBox::CheckBox(std::string text) : Container({std::make_shared<FixedSizeLabe
     box->style.marginTop = 2;
     _children.push_back(box);
 
+    addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
+             {
+                 if (isFocused())
+                 {
+                     box->focus();
+                 }
+                 return false;
+             });
+
     box->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
                   {
                       box->setText(isChecked() ? "x" : " ");

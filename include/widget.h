@@ -40,7 +40,9 @@ public:
     int topM() const override; // override to achieve relative positioning
     int leftM() const override;
 
-    void setParent(Widget* p_parent);
+    void setParent(Widget *p_parent);
+
+    void focus();
 
 protected:
     // draw events
