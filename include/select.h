@@ -6,9 +6,10 @@
 class Select : public Container
 {
 public:
-    Select(const std::vector<std::string>& list = {});
+    Select(const std::vector<std::string> &list = {});
     virtual ~Select();
-    void appendOption(const std::string& txt);
+    void appendOption(const std::string &txt);
+    void setOptions(const std::vector<std::string> &list = {});
     bool isOpen() const;
     void scrollUp();
     void scrollDown();

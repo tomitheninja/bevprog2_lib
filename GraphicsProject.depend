@@ -172,7 +172,7 @@
 1622756929 c:\users\tomi\desktop\bevprog2_bead3\include\fixed_size_label.h
 	"widget.h"
 
-1622759631 c:\users\tomi\desktop\bevprog2_bead3\include\select.h
+1622802226 c:\users\tomi\desktop\bevprog2_bead3\include\select.h
 	"container.h"
 
 1622756929 source:c:\users\tomi\desktop\bevprog2_bead3\src\button.cpp
@@ -197,7 +197,7 @@
 1622759631 source:c:\users\tomi\desktop\bevprog2_bead3\src\pushable_button.cpp
 	"pushable_button.h"
 
-1622759631 source:c:\users\tomi\desktop\bevprog2_bead3\src\select.cpp
+1622802334 source:c:\users\tomi\desktop\bevprog2_bead3\src\select.cpp
 	"select.h"
 	"fixed_size_label.h"
 
@@ -229,9 +229,10 @@
 	"button.h"
 	"text_input.h"
 
-1622802031 source:c:\users\tomi\desktop\bevprog2_bead3\src\application.cpp
+1622802479 source:c:\users\tomi\desktop\bevprog2_bead3\src\application.cpp
 	"application.h"
 	"checkbox.h"
+	"select.h"
 
 1622764371 c:\users\tomi\desktop\bevprog2_bead3\include\text_input.h
 	"widget.h"

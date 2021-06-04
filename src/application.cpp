@@ -1,6 +1,7 @@
 #include "application.h"
 
 #include "checkbox.h"
+#include "select.h"
 
 Application::Application()
 {
@@ -12,15 +13,17 @@ Application::Application()
 
     auto x = std::make_shared<TextInput>();
     x->lb->setText("insert text");
-
     x->style.position = {100, 100};
-
     _ws.push_back(x);
 
     auto y = std::make_shared<CheckBox>();
-    y->style.position = {200, 200};
-
     _ws.push_back(y);
+
+    std::vector<std::string> zs {"alma", "fa", "11"};
+    auto z = std::make_shared<Select>(zs);
+    z->setOptions({"foo", "bar", "baz"});
+    _ws.push_back(z);
+    z->style.position = {200, 200};
 }
 
 Application::~Application() = default;
