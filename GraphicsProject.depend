@@ -351,7 +351,7 @@
 1623136030 source:c:\users\tomi\desktop\bevprog2_lib\src\styles.cpp
 	"styles.h"
 
-1623147251 source:c:\users\tomi\desktop\bevprog2_lib\src\text_input.cpp
+1623147366 source:c:\users\tomi\desktop\bevprog2_lib\src\text_input.cpp
 	"text_input.h"
 
 1623136030 source:c:\users\tomi\desktop\bevprog2_lib\src\vector2.cpp
@@ -361,7 +361,7 @@
 	"widget.h"
 	<iostream>
 
-1623147281 source:c:\users\tomi\desktop\bevprog2_lib\src\application.cpp
+1623147614 source:c:\users\tomi\desktop\bevprog2_lib\src\application.cpp
 	"application.h"
 	<algorithm>
 

@@ -39,17 +39,27 @@ private:
 
     std::shared_ptr<Label> lbItemName;
     std::shared_ptr<TextInput> itemName;
+
     std::shared_ptr<Label> lbPriority;
     std::shared_ptr<NumberPicker> priority;
+
     std::shared_ptr<PushableButton> btnAdd;
     std::shared_ptr<PushableButton> btnDel;
+
     std::shared_ptr<Select> list;
+
     std::shared_ptr<PushableButton> btnOrder1;
     std::shared_ptr<PushableButton> btnOrder2;
     std::shared_ptr<Label> lbFilter;
+
     std::shared_ptr<NumberPicker> WminPriority;
     std::shared_ptr<NumberPicker> WmaxPriority;
     std::shared_ptr<CheckBox> btnFilter;
+
+    std::shared_ptr<Label> lbFile;
+    std::shared_ptr<TextInput> fileName;
+    std::shared_ptr<PushableButton> btnFileWrite;
+    std::shared_ptr<PushableButton> btnFileRead;
 
     std::vector<Option> options;
     int nextIdx = 0;

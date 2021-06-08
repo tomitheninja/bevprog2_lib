@@ -94,6 +94,26 @@ Application::Application()
     WmaxPriority->style.position = {230, 250};
     _ws.push_back(WmaxPriority);
 
+    // fájl label
+    lbFile = std::make_shared<Label>("Fájl neve");
+    lbFile->style.position = {20, 320};
+    _ws.push_back(lbFile);
+
+    // fájl input
+    fileName = std::make_shared<TextInput>();
+    fileName->style.position = {20, 350};
+    _ws.push_back(fileName);
+
+    // btnFileWrite
+    btnFileWrite = std::make_shared<PushableButton>("backup");
+    btnFileWrite->style.position = {20, 380};
+    _ws.push_back(btnFileWrite);
+
+    // 8
+    btnFileRead = std::make_shared<PushableButton>("restore");
+    btnFileRead->style.position = {100, 380};
+    _ws.push_back(btnFileRead);
+
     btnAdd->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
                      {
                          if (evt.button == genv::btn_left && self.containsPoint(cursor))
@@ -168,7 +188,7 @@ bool Application::tick()
 {
     genv::gin >> _ev;
 
-    if (_ev.keycode == genv::key_escape)
+    if (!_ev.type || _ev.keycode == genv::key_escape)
     {
         return false;
     }
@@ -220,8 +240,10 @@ void Application::delOption(int index)
             j++;
         }
     }
-    for(int i = 0; i < options.size(); i++) {
-        if (i != relIdx) {
+    for (int i = 0; i < options.size(); i++)
+    {
+        if (i != relIdx)
+        {
             result.push_back(options[i]);
         }
     }
