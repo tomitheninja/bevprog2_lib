@@ -1,5 +1,8 @@
 #include "application.h"
 #include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
 bool OrderByPriority(Option o1, Option o2)
 {
@@ -180,6 +183,59 @@ Application::Application()
                             }
                             return false;
                         });
+
+    btnFileWrite->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
+                           {
+                               if (evt.button == genv::btn_left && self.containsPoint(cursor))
+                               {
+                                   std::string fname = fileName->getText();
+                                   if (!fname.empty())
+                                   {
+                                       std::ofstream f(fname);
+                                       for (Option o : options)
+                                       {
+                                           f << o.idx << ';' << o.priority << ';' << o.name << '\n';
+                                       }
+                                       f.close();
+                                   }
+                                   return true;
+                               }
+                               return false;
+                           });
+
+    btnFileRead->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
+                          {
+                              if (evt.button == genv::btn_left && self.containsPoint(cursor))
+                              {
+                                  std::string fname = fileName->getText();
+                                  if (!fname.empty())
+                                  {
+                                      std::ifstream f(fname);
+                                      std::vector<Option> os;
+                                      if (f.is_open())
+                                      {
+                                          std::string line;
+                                          while (getline(f, line) && !line.empty())
+                                          {
+                                              std::stringstream ss(line);
+                                              Option o;
+                                              char junk;
+                                              ss >> o.idx;
+                                              ss >> junk;
+                                              ss >> o.priority;
+                                              ss >> junk;
+                                              getline(ss, o.name);
+                                              os.push_back(o);
+                                          }
+                                      }
+                                      f.close();
+                                      options = os;
+                                      updateOptions();
+                                  }
+                                  return true;
+                              }
+                              return false;
+                          });
 }
 
 Application::~Application() = default;

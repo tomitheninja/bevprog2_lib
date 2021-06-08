@@ -27,7 +27,7 @@ TextInput::TextInput() : Widget({std::make_shared<FixedSizeLabel>("")})
                      if (evt.type == genv::ev_timer)
                      {
                          toggleInsert();
-                         return true;
+                         return false;
                      }
                      else if (evt.type == genv::ev_key && (self.containsPoint(cursor) || isFocused()))
                      {
@@ -49,7 +49,6 @@ TextInput::TextInput() : Widget({std::make_shared<FixedSizeLabel>("")})
                                  txt.pop_back();
                              lb->setText(txt);
                              insertInsert();
-
                              return true;
                          }
                          if (c != '\0')
