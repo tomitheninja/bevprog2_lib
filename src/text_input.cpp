@@ -26,20 +26,8 @@ TextInput::TextInput() : Widget({std::make_shared<FixedSizeLabel>("")})
                      lb->style.size = style.size;
                      if (evt.type == genv::ev_timer)
                      {
-                         if (backspacePressed)
-                         {
-                             removeInsert();
-                             std::string txt = lb->getText();
-                             if (!txt.empty())
-                                 txt.pop_back();
-                             lb->setText(txt);
-                             return true;
-                         }
-                         else
-                         {
-                             toggleInsert();
-                             return true;
-                         }
+                         toggleInsert();
+                         return true;
                      }
                      else if (evt.type == genv::ev_key && (self.containsPoint(cursor) || isFocused()))
                      {
@@ -54,11 +42,15 @@ TextInput::TextInput() : Widget({std::make_shared<FixedSizeLabel>("")})
                          }
                          else if (evt.keycode == genv::key_backspace)
                          {
-                             backspacePressed = true;
-                         }
-                         else if (evt.keycode == -genv::key_backspace)
-                         {
-                             backspacePressed = false;
+
+                             removeInsert();
+                             std::string txt = lb->getText();
+                             if (!txt.empty())
+                                 txt.pop_back();
+                             lb->setText(txt);
+                             insertInsert();
+
+                             return true;
                          }
                          if (c != '\0')
                          {

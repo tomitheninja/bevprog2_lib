@@ -18,7 +18,6 @@ public:
 
 protected:
 private:
-    bool backspacePressed = false;
     bool insertState = false;
 };
 
