@@ -5,9 +5,11 @@ NumberPicker::NumberPicker(int lower, int upper) : Container({
                                                        std::make_shared<Label>("0"),
                                                        std::make_shared<Button>("+"),
                                                        std::make_shared<Button>("-"),
-                                                   }),
-                                                   _lower(lower), _upper(upper)
+                                                   })
+
 {
+    setLower(lower);
+    setUpper(upper);
     style.marginRight = 5;
     style.outerBorderTop = style.outerBorderBottom = style.outerBorderLeft = style.outerBorderRight = {true, Color{255, 255, 255}};
 
@@ -21,8 +23,6 @@ NumberPicker::NumberPicker(int lower, int upper) : Container({
     lb->style.position = {10, 10};
     btnDecr->style.position = {70, 20};
     btnIncr->style.position = {68, 0};
-
-    setValue(lower);
 
     // Increment on click
     btnIncr->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
@@ -81,3 +81,20 @@ int NumberPicker::getValue()
 {
     return _value;
 }
+
+void NumberPicker::setLower(int val)
+{
+    _lower = val;
+    if (_value < _lower)
+        _value = _lower;
+}
+
+void NumberPicker::setUpper(int val)
+{
+    _upper = val;
+    if (_value > _upper)
+        _value = _upper;
+}
+
+int NumberPicker::getLower() const { return _lower; }
+int NumberPicker::getUpper() const { return _upper; }

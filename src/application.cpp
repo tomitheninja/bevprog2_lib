@@ -11,9 +11,17 @@ bool OrderByCreatedAt(Option o1, Option o2)
     return o1.idx < o2.idx;
 }
 
+bool Option::matches(bool filterState, int min, int max)
+{
+    return !filterState || (min <= priority && priority <= max);
+}
+
 Application::Application()
 {
-    _screen = Vector2(640, 480);
+    const int P_MIN = 1;
+    const int P_MAX = 20;
+
+    _screen = Vector2(800, 600);
     genv::gout.open(_screen.x(), _screen.y());
     genv::gout << genv::font("LiberationSans-Regular.ttf", 20);
 
@@ -35,7 +43,7 @@ Application::Application()
     _ws.push_back(lbPriority);
 
     // 3
-    priority = std::make_shared<NumberPicker>(1, 20);
+    priority = std::make_shared<NumberPicker>(P_MIN, P_MAX);
     priority->style.position = {250, 50};
     _ws.push_back(priority);
 
@@ -52,19 +60,39 @@ Application::Application()
     // 6
     std::vector<std::string> s{""};
     list = std::make_shared<Select>(s);
-    list->style.position = {20, 200};
+    list->style.position = {370, 20};
     list->displayMany(5);
     _ws.push_back(list);
 
     // 7
     btnOrder1 = std::make_shared<PushableButton>("Rendez: prioritás");
-    btnOrder1->style.position = {20, 160};
+    btnOrder1->style.position = {20, 140};
     _ws.push_back(btnOrder1);
 
     // 8
     btnOrder2 = std::make_shared<PushableButton>("Rendez: létrehozás");
-    btnOrder2->style.position = {200, 160};
+    btnOrder2->style.position = {200, 140};
     _ws.push_back(btnOrder2);
+
+    // 9
+    lbFilter = std::make_shared<Label>("Szűrés prioritás intervallumra");
+    lbFilter->style.position = {20, 220};
+    _ws.push_back(lbFilter);
+
+    // 10
+    btnFilter = std::make_shared<CheckBox>("szűrés");
+    btnFilter->style.position = {20, 260};
+    _ws.push_back(btnFilter);
+
+    // 11
+    WminPriority = std::make_shared<NumberPicker>(P_MIN, P_MAX);
+    WminPriority->style.position = {130, 250};
+    _ws.push_back(WminPriority);
+
+    // 12
+    WmaxPriority = std::make_shared<NumberPicker>(P_MIN, P_MAX);
+    WmaxPriority->style.position = {230, 250};
+    _ws.push_back(WmaxPriority);
 
     btnAdd->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
                      {
@@ -94,21 +122,40 @@ Application::Application()
                          return false;
                      });
 
-    btnOrder1->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
-                        {
-                            if (evt.button == genv::btn_left && self.containsPoint(cursor))
-                            {
-                                std::sort(options.begin(), options.end(), OrderByPriority);
-                                updateOptions();
-                            }
-                            return false;
-                        });
+    WminPriority->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
+                           {
+                               int prevMinUpper = WminPriority->getUpper();
+                               int prevMaxLower = WmaxPriority->getLower();
+                               WminPriority->setUpper(WmaxPriority->getValue());
+                               WmaxPriority->setLower(WminPriority->getValue());
+                               if (prevMinUpper != WminPriority->getUpper() || prevMaxLower != WmaxPriority->getLower())
+                               {
+                                   updateOptions();
+                                   return true;
+                               }
+                               return false;
+                           });
 
     btnOrder2->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
                         {
                             if (evt.button == genv::btn_left && self.containsPoint(cursor))
                             {
                                 std::sort(options.begin(), options.end(), OrderByCreatedAt);
+                                updateOptions();
+                            }
+                            return false;
+                        });
+
+    btnFilter->onChange = [&]()
+    {
+        updateOptions();
+    };
+
+    btnOrder1->addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
+                        {
+                            if (evt.button == genv::btn_left && self.containsPoint(cursor))
+                            {
+                                std::sort(options.begin(), options.end(), OrderByPriority);
                                 updateOptions();
                             }
                             return false;
@@ -160,10 +207,23 @@ void Application::addOption(Option o)
 void Application::delOption(int index)
 {
     std::vector<Option> result;
-    for (int i = 0; i < options.size(); i++)
+    int relIdx = -1;
+    for (int i = 0, j = 0; i < options.size(); i++)
     {
-        if (i != index)
+        if (options[i].matches(btnFilter->isChecked(), WminPriority->getValue(), WmaxPriority->getValue()))
+        {
+            if (j == index)
+            {
+                relIdx = i;
+                break;
+            }
+            j++;
+        }
+    }
+    for(int i = 0; i < options.size(); i++) {
+        if (i != relIdx) {
             result.push_back(options[i]);
+        }
     }
     options = result;
 }
@@ -171,16 +231,14 @@ void Application::delOption(int index)
 void Application::updateOptions()
 {
     std::vector<std::string> v;
-    if (options.empty())
+    for (Option o : options)
+    {
+        if (o.matches(btnFilter->isChecked(), WminPriority->getValue(), WmaxPriority->getValue()))
+            v.push_back(o.name + " (" + std::to_string(o.priority) + ")");
+    }
+    if (v.empty())
     {
         v.push_back("");
-    }
-    else
-    {
-        for (Option o : options)
-        {
-            v.push_back(o.name + " (" + std::to_string(o.priority) + ")");
-        }
     }
     list->setOptions(v);
     list->setSelectedIdx(0);

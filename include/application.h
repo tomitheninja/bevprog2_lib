@@ -15,6 +15,7 @@ struct Option
     std::string name;
     int priority;
     int idx;
+    bool matches(bool filterState, int min, int max);
 };
 
 class Application
@@ -45,6 +46,11 @@ private:
     std::shared_ptr<Select> list;
     std::shared_ptr<PushableButton> btnOrder1;
     std::shared_ptr<PushableButton> btnOrder2;
+    std::shared_ptr<Label> lbFilter;
+    std::shared_ptr<NumberPicker> WminPriority;
+    std::shared_ptr<NumberPicker> WmaxPriority;
+    std::shared_ptr<CheckBox> btnFilter;
+
     std::vector<Option> options;
     int nextIdx = 0;
 };

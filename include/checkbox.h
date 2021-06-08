@@ -6,22 +6,22 @@
 #include "label.h"
 #include <memory>
 
-class CheckBox: public Container
+class CheckBox : public Container
 {
-    public:
-        CheckBox(std::string text = "checkbox");
-        virtual ~CheckBox();
-        bool isChecked() const;
-        void select();
-        void deselect();
-        void toggle();
+public:
+    CheckBox(std::string text = "checkbox");
+    virtual ~CheckBox();
+    bool isChecked() const;
+    void select();
+    void deselect();
+    void toggle();
+    std::function<void()> onChange = []() {};
 
-    protected:
-
-    private:
-        std::shared_ptr<FixedSizeLabel> box;
-        std::shared_ptr<Label> lb;
-        bool _checked = false;
+protected:
+private:
+    std::shared_ptr<FixedSizeLabel> box;
+    std::shared_ptr<Label> lb;
+    bool _checked = false;
 };
 
 #endif // CHECKBOX_H

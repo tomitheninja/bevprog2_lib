@@ -15,6 +15,10 @@ public:
     Button *btnDecr;
     void setValue(int value);
     int getValue();
+    void setLower(int val);
+    void setUpper(int val);
+    int getLower() const;
+    int getUpper() const;
 
 protected:
     int _value = 0;

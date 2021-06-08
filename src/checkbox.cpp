@@ -55,14 +55,17 @@ bool CheckBox::isChecked() const
 void CheckBox::select()
 {
     _checked = true;
+    onChange();
 }
 
 void CheckBox::deselect()
 {
     _checked = false;
+    onChange();
 }
 
 void CheckBox::toggle()
 {
     _checked = !_checked;
+    onChange();
 }

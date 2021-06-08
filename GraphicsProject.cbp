@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
@@ -67,6 +67,7 @@
 		<Unit filename="include/text_input.h" />
 		<Unit filename="include/vector2.h" />
 		<Unit filename="include/widget.h" />
+		<Unit filename="include/checkbox.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/application.cpp" />
 		<Unit filename="src/button.cpp" />
@@ -82,6 +83,7 @@
 		<Unit filename="src/text_input.cpp" />
 		<Unit filename="src/vector2.cpp" />
 		<Unit filename="src/widget.cpp" />
+		<Unit filename="src/checkbox.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
