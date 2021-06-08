@@ -63,8 +63,8 @@ Application::Application()
     // 6
     std::vector<std::string> s{""};
     list = std::make_shared<Select>(s);
-    list->style.position = {370, 20};
-    list->displayMany(5);
+    list->style.position = {390, 20};
+    list->displayMany(15);
     _ws.push_back(list);
 
     // 7
@@ -153,7 +153,8 @@ Application::Application()
                                WmaxPriority->setLower(WminPriority->getValue());
                                if (prevMinUpper != WminPriority->getUpper() || prevMaxLower != WmaxPriority->getLower())
                                {
-                                   updateOptions();
+                                   if (btnFilter->isChecked())
+                                       updateOptions();
                                    return true;
                                }
                                return false;
@@ -163,6 +164,7 @@ Application::Application()
                         {
                             if (evt.button == genv::btn_left && self.containsPoint(cursor))
                             {
+                                trySelectThis = {true, list->getValue()};
                                 std::sort(options.begin(), options.end(), OrderByCreatedAt);
                                 updateOptions();
                             }
@@ -171,6 +173,7 @@ Application::Application()
 
     btnFilter->onChange = [&]()
     {
+        trySelectThis = {true, list->getValue()};
         updateOptions();
     };
 
@@ -178,6 +181,7 @@ Application::Application()
                         {
                             if (evt.button == genv::btn_left && self.containsPoint(cursor))
                             {
+                                trySelectThis = {true, list->getValue()};
                                 std::sort(options.begin(), options.end(), OrderByPriority);
                                 updateOptions();
                             }
@@ -226,6 +230,8 @@ Application::Application()
                                               ss >> junk;
                                               getline(ss, o.name);
                                               os.push_back(o);
+
+                                              nextIdx = std::max(nextIdx, o.idx + 1);
                                           }
                                       }
                                       f.close();
@@ -308,18 +314,27 @@ void Application::delOption(int index)
 
 void Application::updateOptions()
 {
+    int idxToSelect = 0;
     std::vector<std::string> v;
-    for (Option o : options)
+    for (int i = 0; i < options.size(); i++)
     {
-        if (o.matches(btnFilter->isChecked(), WminPriority->getValue(), WmaxPriority->getValue()))
-            v.push_back(o.name + " (" + std::to_string(o.priority) + ")");
+        if (options[i].matches(btnFilter->isChecked(), WminPriority->getValue(), WmaxPriority->getValue()))
+        {
+            if (trySelectThis.first && trySelectThis.second == options[i].name + " (" + std::to_string(options[i].priority) + ")")
+            {
+                idxToSelect = v.size();
+                trySelectThis.first = false;
+            }
+            v.push_back(options[i].name + " (" + std::to_string(options[i].priority) + ")");
+        }
     }
     if (v.empty())
     {
         v.push_back("");
     }
     list->setOptions(v);
-    list->setSelectedIdx(0);
+    list->setSelectedIdx(idxToSelect);
+    trySelectThis.first = false;
 }
 
 Option Application::createOption(std::string name, int priority)

@@ -19,7 +19,7 @@ void Select::setSelectedIdx(int idx)
 {
     if (idx < 0)
         idx = 0;
-    if (idx < _children.size() - 1)
+    if (idx > _children.size() - 1)
     {
         idx = _children.size() - 1;
     }

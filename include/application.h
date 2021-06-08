@@ -63,6 +63,8 @@ private:
 
     std::vector<Option> options;
     int nextIdx = 0;
+
+    std::pair<bool, std::string> trySelectThis = {false, ""};
 };
 
 #endif // APPLICATION_H
