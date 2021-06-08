@@ -16,6 +16,8 @@ public:
 
     std::string getValue() const;
     void displayMany(int many);
+    int getSelectedIdx() const;
+    void setSelectedIdx(int idx);
 
 protected:
     void postChildDraw() const override;

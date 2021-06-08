@@ -10,9 +10,25 @@ void Select::setOptions(const std::vector<std::string> &list)
         appendOption(txt);
 }
 
+int Select::getSelectedIdx() const
+{
+    return _selectedIdx;
+}
+
+void Select::setSelectedIdx(int idx)
+{
+    if (idx < 0)
+        idx = 0;
+    if (idx < _children.size() - 1)
+    {
+        idx = _children.size() - 1;
+    }
+
+    _selectedIdx = idx;
+}
+
 Select::Select(const std::vector<std::string> &options) : Container()
 {
-    style.size.setX(150);
     setOptions(options);
     displayMany(_manyRequested);
 
@@ -25,6 +41,7 @@ Select::Select(const std::vector<std::string> &options) : Container()
 
     addEvent([&](const genv::event &evt, const Vector2 &cursor, Widget &self)
              {
+                 style.size.setX(300);
                  // Close when lost focus
                  if (!isFocused())
                      _isOpen = false;
@@ -97,7 +114,7 @@ void Select::appendOption(const std::string &txt)
     if (_children.empty())
     {
         p_w->style.isRelative = true;
-        p_w->style.size.setX(style.size.x() - 25);
+        p_w->style.size.setX(style.size.x() - 5);
         p_w->style.bgMColor = {false, Color(64, 64, 64)};   // selected item
         p_w->style.bgColor = {false, Color(128, 128, 128)}; // hovered item
     }

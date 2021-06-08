@@ -12,6 +12,7 @@ public:
     void removeInsert();
     void insertInsert();
     void toggleInsert();
+    std::string getText();
 
     std::shared_ptr<FixedSizeLabel> lb;
 

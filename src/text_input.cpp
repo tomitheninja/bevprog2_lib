@@ -1,5 +1,15 @@
 #include "text_input.h"
 
+std::string TextInput::getText()
+{
+    bool prevState = insertState;
+    removeInsert();
+    std::string result = lb->getText();
+    if (prevState)
+        insertInsert();
+    return result;
+}
+
 TextInput::TextInput() : Widget({std::make_shared<FixedSizeLabel>("")})
 {
     style.size = {200, 25};
